@@ -7,32 +7,26 @@ const { validate: namedExport } = require("../../");
 
 describe("@code-engine/validate package exports", () => {
 
-  it("should export the validate function as the default CommonJS export", () => {
+  it("should export the module as the default CommonJS export", () => {
     expect(commonJSExport).to.be.an("object");
-    expect(commonJSExport).to.equal(defaultExport);
-    expect(commonJSExport).to.equal(namedExport);
+    expect(commonJSExport.default).to.equal(defaultExport);
+    expect(commonJSExport.validate).to.equal(namedExport);
   });
 
   it("should export the validate function as the default ESM export", () => {
     expect(defaultExport).to.be.an("object");
-    expect(defaultExport).to.equal(commonJSExport);
-    expect(defaultExport).to.equal(namedExport);
+    expect(defaultExport).to.have.keys("value", "type", "string", "number");
   });
 
   it("should export the validate function as a named ESM export", () => {
     expect(namedExport).to.be.an("object");
-    expect(namedExport).to.equal(commonJSExport);
-    expect(namedExport).to.equal(defaultExport);
+    expect(namedExport).to.have.keys("value", "type", "string", "number");
   });
 
   it("should not export anything else", () => {
     expect(commonJSExport).to.have.keys(
       "default",
       "validate",
-      "string",
-      "number",
-      "type",
-      "value",
     );
   });
 
