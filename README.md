@@ -1,6 +1,17 @@
 CodeEngine validation helpers
 ======================================
 
+[![Cross-Platform Compatibility](https://engine.codes/img/badges/os-badges.svg)](https://travis-ci.com/CodeEngineOrg/code-engine-validate)
+[![Build Status](https://api.travis-ci.com/CodeEngineOrg/code-engine-validate.svg?branch=master)](https://travis-ci.com/CodeEngineOrg/code-engine-validate)
+
+[![Coverage Status](https://coveralls.io/repos/github/CodeEngineOrg/code-engine-validate/badge.svg?branch=master)](https://coveralls.io/github/CodeEngineOrg/code-engine-validate)
+[![Dependencies](https://david-dm.org/CodeEngineOrg/code-engine-validate.svg)](https://david-dm.org/CodeEngineOrg/code-engine-validate)
+
+[![npm](https://img.shields.io/npm/v/@code-engine/validate.svg)](https://www.npmjs.com/package/@code-engine/validate)
+[![License](https://img.shields.io/npm/l/@code-engine/validate.svg)](LICENSE)
+
+
+
 This is an utility library that's used inside [CodeEngine](https://engine.codes/) to validate inputs.
 
 > **NOTE:** This is an **internal library** that is only intended to be used by CodeEngine. Using it outside of CodeEngine is discouraged.
