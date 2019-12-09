@@ -12,7 +12,7 @@ CodeEngine validation helpers
 
 
 
-This is an utility library that's used inside [CodeEngine](https://engine.codes/) to validate inputs.
+This is a utility library that's used inside [CodeEngine](https://engine.codes/) to validate inputs.
 
 > **NOTE:** This is an **internal library** that is only intended to be used by CodeEngine. Using it outside of CodeEngine is discouraged.
 
