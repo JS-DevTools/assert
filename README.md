@@ -1,8 +1,8 @@
 CodeEngine validation helpers
 ======================================
 
-[![Cross-Platform Compatibility](https://engine.codes/img/badges/os-badges.svg)](https://travis-ci.com/CodeEngineOrg/code-engine-validate)
-[![Build Status](https://api.travis-ci.com/CodeEngineOrg/code-engine-validate.svg?branch=master)](https://travis-ci.com/CodeEngineOrg/code-engine-validate)
+[![Cross-Platform Compatibility](https://engine.codes/img/badges/os-badges.svg)](https://github.com/CodeEngineOrg/code-engine-validate/blob/master/.github/workflows/CI-CD.yaml)
+[![Build Status](https://github.com/CodeEngineOrg/code-engine-validate/workflows/CI-CD/badge.svg)](https://github.com/CodeEngineOrg/code-engine-validate/blob/master/.github/workflows/CI-CD.yaml)
 
 [![Coverage Status](https://coveralls.io/repos/github/CodeEngineOrg/code-engine-validate/badge.svg?branch=master)](https://coveralls.io/github/CodeEngineOrg/code-engine-validate)
 [![Dependencies](https://david-dm.org/CodeEngineOrg/code-engine-validate.svg)](https://david-dm.org/CodeEngineOrg/code-engine-validate)
