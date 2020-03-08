@@ -1,6 +1,6 @@
 // tslint:disable: no-shadowed-variable
 import stringify from "@code-engine/stringify";
-import { ono } from "ono";
+import { ono } from "@jsdevtools/ono";
 
 /**
  * Validates any value that is not `undefined` (even `null` and `NaN`).

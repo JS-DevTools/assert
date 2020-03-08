@@ -1,6 +1,6 @@
 // tslint:disable: ban-types no-null-undefined-union
 import stringify from "@code-engine/stringify";
-import { ono } from "ono";
+import { ono } from "@jsdevtools/ono";
 import { value as validateValue } from "./value";
 
 /**

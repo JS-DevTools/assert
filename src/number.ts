@@ -1,5 +1,5 @@
 import { stringify } from "@code-engine/stringify";
-import { ono } from "ono";
+import { ono } from "@jsdevtools/ono";
 import { type } from "./type";
 
 /**
