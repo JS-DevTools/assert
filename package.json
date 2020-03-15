@@ -1,6 +1,6 @@
 {
   "name": "@code-engine/validate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Validates user input for CodeEngine and its plugins",
   "keywords": [
     "code-engine",
