@@ -11,10 +11,20 @@ describe("validate.string.length()", () => {
     expect(validate.string.length("hello", 5, 10)).to.equal("hello");
   });
 
+  it("should validate strings that meet the exact length", () => {
+    expect(validate.string.length("a", 1)).to.equal("a");
+    expect(validate.string.length("Hello, world!", 13)).to.equal("Hello, world!");
+    expect(validate.string.length("hello", 5)).to.equal("hello");
+  });
+
   it("should validate default values", () => {
     expect(validate.string.length(undefined, 0, 1, "name", "A")).to.equal("A");
     expect(validate.string.length(undefined, 10, 50, "name", "Hello, world!")).to.equal("Hello, world!");
     expect(validate.string.length(undefined, 5, 10, "name", "hello")).to.equal("hello");
+
+    expect(validate.string.length(undefined, 1, "name", "A")).to.equal("A");
+    expect(validate.string.length(undefined, 13, "name", "Hello, world!")).to.equal("Hello, world!");
+    expect(validate.string.length(undefined, 5, "name", "hello")).to.equal("hello");
   });
 
   it("should throw an error for strings that don't meet the minimum and maximum", () => {
@@ -29,6 +39,18 @@ describe("validate.string.length()", () => {
     expect(tooLong("Hello, world!", 1, 10)).to.throw(RangeError, 'Invalid value: "Hello, world!". It cannot be more than 10 characters.');
   });
 
+  it("should throw an error for strings that don't meet the exact length", () => {
+    function tooLong (value, length) {
+      return () => {
+        validate.string.length(value, length);
+      };
+    }
+
+    expect(tooLong(" ", 0)).to.throw(RangeError, 'Invalid value: " ". It must be exactly 0 characters.');
+    expect(tooLong("abc", 1)).to.throw(RangeError, 'Invalid value: "abc". It must be exactly 1 character.');
+    expect(tooLong("Hello, world!", 10)).to.throw(RangeError, 'Invalid value: "Hello, world!". It must be exactly 10 characters.');
+  });
+
   it("should throw an error for defaults that don't meet the maximum", () => {
     function invalidDefault (defaultValue, min, max) {
       return () => {
@@ -39,6 +61,18 @@ describe("validate.string.length()", () => {
     expect(invalidDefault(" ", 0, 0)).to.throw(RangeError, 'Invalid name: " ". It must be exactly 0 characters.');
     expect(invalidDefault("abc", 0, 1)).to.throw(RangeError, 'Invalid name: "abc". It cannot be more than 1 character.');
     expect(invalidDefault("Hello, world!", 1, 10)).to.throw(RangeError, 'Invalid name: "Hello, world!". It cannot be more than 10 characters.');
+  });
+
+  it("should throw an error for defaults that don't meet the exact length", () => {
+    function invalidDefault (defaultValue, length) {
+      return () => {
+        validate.string.length(undefined, length, "name", defaultValue);
+      };
+    }
+
+    expect(invalidDefault(" ", 0)).to.throw(RangeError, 'Invalid name: " ". It must be exactly 0 characters.');
+    expect(invalidDefault("abc", 1)).to.throw(RangeError, 'Invalid name: "abc". It must be exactly 1 character.');
+    expect(invalidDefault("Hello, world!", 10)).to.throw(RangeError, 'Invalid name: "Hello, world!". It must be exactly 10 characters.');
   });
 
 });

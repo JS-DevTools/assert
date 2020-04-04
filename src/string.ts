@@ -52,19 +52,33 @@ Object.defineProperty(string, "length", { value: validateLength });
 
 
 function validateNonEmpty<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
-  return validateLength(value, 1, Infinity, fieldName, defaultValue);
+  return validateStringLength(value, 1, Infinity, fieldName, defaultValue);
 }
 
 
 function validateMinLength<T extends string>(
 value: T | undefined, minLength: number, fieldName = "value", defaultValue?: T): T {
-  return validateLength(value, minLength, Infinity, fieldName, defaultValue);
+  return validateStringLength(value, minLength, Infinity, fieldName, defaultValue);
 }
 
 
 function validateMaxLength<T extends string>(
 value: T | undefined, maxLength: number, fieldName = "value", defaultValue?: T): T {
-  return validateLength(value, 0, maxLength, fieldName, defaultValue);
+  return validateStringLength(value, 0, maxLength, fieldName, defaultValue);
+}
+
+
+function validateLength<T extends string>(
+value: T | undefined, minLength: number, maxLength?: number, fieldName = "value", defaultValue?: T): T {
+  if (typeof maxLength === "string") {
+    defaultValue = fieldName as T;
+    fieldName = maxLength;
+    maxLength = undefined;
+  }
+  if (maxLength === undefined) {
+    maxLength = minLength;
+  }
+  return validateStringLength(value, minLength, maxLength, fieldName, defaultValue);
 }
 
 
@@ -79,7 +93,7 @@ function validateNonWhitespace<T extends string>(value: T | undefined, fieldName
 }
 
 
-function validateLength<T extends string>(
+function validateStringLength<T extends string>(
 value: T | undefined, minLength = 1, maxLength = Infinity, fieldName = "value", defaultValue?: T): T {
   value = type.string(value, fieldName, defaultValue);
 
