@@ -1,5 +1,5 @@
 // tslint:disable: ban-types no-null-undefined-union
-import stringify from "@code-engine/stringify";
+import { humanize } from "@jsdevtools/humanize-anything";
 import { ono } from "@jsdevtools/ono";
 import { value as validateValue } from "./value";
 
@@ -60,7 +60,7 @@ function validateString<T extends string>(value: T | undefined, fieldName = "val
   value = validateValue(value, fieldName, defaultValue);
 
   if (typeof value !== "string") {
-    throw ono.type(`Invalid ${fieldName}: ${stringify(value)}. Expected a string.`);
+    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected a string.`);
   }
 
   return value;
@@ -71,7 +71,7 @@ function validateNumber<T extends number>(value: T | undefined, fieldName = "val
   value = validateValue(value, fieldName, defaultValue);
 
   if (typeof value !== "number" || Number.isNaN(value)) {
-    throw ono.type(`Invalid ${fieldName}: ${stringify(value)}. Expected a number.`);
+    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected a number.`);
   }
 
   return value;
@@ -82,7 +82,7 @@ function validateBoolean<T extends boolean>(value: T | undefined, fieldName = "v
   value = validateValue(value, fieldName, defaultValue);
 
   if (typeof value !== "boolean") {
-    throw ono.type(`Invalid ${fieldName}: ${stringify(value)}. Expected a boolean.`);
+    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected a boolean.`);
   }
 
   return value;
@@ -93,7 +93,7 @@ function validateObject<T extends object>(value: T | undefined, fieldName = "val
   value = validateValue(value, fieldName, defaultValue);
 
   if (typeof value !== "object" || value === null) {
-    throw ono.type(`Invalid ${fieldName}: ${stringify(value)}. Expected an object.`);
+    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected an object.`);
   }
 
   return value;
@@ -104,7 +104,7 @@ function validateFunction<T extends Function>(value: T | undefined, fieldName = 
   value = validateValue(value, fieldName, defaultValue);
 
   if (typeof value !== "function") {
-    throw ono.type(`Invalid ${fieldName}: ${stringify(value)}. Expected a function.`);
+    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected a function.`);
   }
 
   return value;
@@ -170,23 +170,23 @@ value: T | undefined, types: Array<Function | undefined | null>, fieldName = "va
 
   // If we get here, then the value is not an allowed type
   throw ono.type(
-    `Invalid ${fieldName}: ${stringify(value)}. Expected ${getTypeList(primitiveTypes, constructors, specialValues)}.`
+    `Invalid ${fieldName}: ${humanize(value)}. Expected ${getTypeList(primitiveTypes, constructors, specialValues)}.`
   );
 }
 
 function getTypeList(
 primitiveTypes: string[], constructors: Function[], specialValues: Array<null | undefined>): string {
   if (primitiveTypes.length === 0 && constructors.length === 0) {
-    return stringify.list(specialValues.map(String), { conjunction: "or" });
+    return humanize.list(specialValues.map(String), { conjunction: "or" });
   }
   else {
     let typeNames = [
       ...primitiveTypes,
-      ...constructors.map(stringify.function).filter((name) => !primitiveTypes.includes(name.toLowerCase())),
+      ...constructors.map(humanize.function).filter((name) => !primitiveTypes.includes(name.toLowerCase())),
       ...specialValues.map(String),
     ];
 
-    let typeList = stringify.list(typeNames, { conjunction: "or" });
+    let typeList = humanize.list(typeNames, { conjunction: "or" });
 
     if (["a", "e", "i", "o", "u"].includes(typeList[0].toLowerCase())) {
       return `an ${typeList}`;

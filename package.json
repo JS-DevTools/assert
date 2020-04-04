@@ -1,9 +1,8 @@
 {
-  "name": "@code-engine/validate",
+  "name": "@jsdevtools/validate",
   "version": "1.0.2",
-  "description": "Validates user input for CodeEngine and its plugins",
+  "description": "Simple validation helpers with user-friendly error messages",
   "keywords": [
-    "code-engine",
     "validate",
     "validation",
     "input validation"
@@ -13,10 +12,10 @@
     "url": "https://jamesmessinger.com"
   },
   "license": "MIT",
-  "homepage": "https://engine.codes",
+  "homepage": "https://jstools.dev/validate",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CodeEngineOrg/code-engine-validate.git"
+    "url": "https://github.com/JS-DevTools/validate.git"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -37,9 +36,8 @@
     "release": "npm run upgrade && npm run clean && npm run build && npm test && npm run bump"
   },
   "engines": {
-    "node": ">=12.12"
+    "node": ">=10"
   },
-  "engineStrict": true,
   "devDependencies": {
     "@jsdevtools/eslint-config-modular": "^8.0.0",
     "@jsdevtools/tslint-modular": "^2.0.2",
@@ -59,7 +57,7 @@
     "typescript-tslint-plugin": "^0.5.5"
   },
   "dependencies": {
-    "@code-engine/stringify": "^1.0.1",
-    "@jsdevtools/ono": "^7.1.0"
+    "@jsdevtools/ono": "^7.1.0",
+    "@jsdevtools/humanize-anything": "^1.0.0"
   }
 }

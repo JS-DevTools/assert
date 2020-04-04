@@ -1,4 +1,4 @@
-import { stringify } from "@code-engine/stringify";
+import { humanize } from "@jsdevtools/humanize-anything";
 import { ono } from "@jsdevtools/ono";
 import { type } from "./type";
 
@@ -52,7 +52,7 @@ function validateInteger<T extends number>(value: T | undefined, fieldName = "va
   value = type.number(value, fieldName, defaultValue);
 
   if (!Number.isInteger(value)) {
-    throw ono.type(`Invalid ${fieldName}: ${stringify(value)}. Expected an integer.`);
+    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected an integer.`);
   }
 
   return value;
@@ -63,7 +63,7 @@ function validatePositiveInteger<T extends number>(value: T | undefined, fieldNa
   value = validateInteger(value, fieldName, defaultValue);
 
   if (value as number < 1) {
-    throw ono.range(`Invalid ${fieldName}: ${stringify(value)}. Expected a positive integer.`);
+    throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. Expected a positive integer.`);
   }
 
   return value;
@@ -74,7 +74,7 @@ function validateNonNegativeInteger<T extends number>(value: T | undefined, fiel
   value = validateInteger(value, fieldName, defaultValue);
 
   if (value as number < 0) {
-    throw ono.range(`Invalid ${fieldName}: ${stringify(value)}. Expected zero or greater.`);
+    throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. Expected zero or greater.`);
   }
 
   return value;

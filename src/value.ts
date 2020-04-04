@@ -1,5 +1,5 @@
 // tslint:disable: no-shadowed-variable
-import stringify from "@code-engine/stringify";
+import { humanize } from "@jsdevtools/humanize-anything";
 import { ono } from "@jsdevtools/ono";
 
 /**
@@ -31,7 +31,7 @@ function validateHasValue<T>(value: T | undefined, fieldName = "value", defaultV
   }
 
   if (value === undefined) {
-    throw ono.type(`Invalid ${fieldName}: ${stringify(value)}. A value is required.`);
+    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. A value is required.`);
   }
 
   return value;
@@ -43,8 +43,8 @@ function validateOneOf<T>(value: T | undefined, values: T[], fieldName = "value"
 
   if (!values.includes(value)) {
     throw ono.type(
-      `Invalid ${fieldName}: ${stringify(value)}. ` +
-      `Expected ${stringify.values(values, { conjunction: "or" })}.`
+      `Invalid ${fieldName}: ${humanize(value)}. ` +
+      `Expected ${humanize.values(values, { conjunction: "or" })}.`
     );
   }
 

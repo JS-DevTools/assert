@@ -1,21 +1,26 @@
-CodeEngine validation helpers
+Validate
 ======================================
+### Simple validation helpers with user-friendly error messages
 
-[![Cross-Platform Compatibility](https://engine.codes/img/badges/os-badges.svg)](https://github.com/CodeEngineOrg/code-engine-validate/blob/master/.github/workflows/CI-CD.yaml)
-[![Build Status](https://github.com/CodeEngineOrg/code-engine-validate/workflows/CI-CD/badge.svg)](https://github.com/CodeEngineOrg/code-engine-validate/blob/master/.github/workflows/CI-CD.yaml)
+[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/validate/blob/master/.github/workflows/CI-CD.yaml)
+[![Build Status](https://github.com/JS-DevTools/validate/workflows/CI-CD/badge.svg)](https://github.com/JS-DevTools/validate/blob/master/.github/workflows/CI-CD.yaml)
 
-[![Coverage Status](https://coveralls.io/repos/github/CodeEngineOrg/code-engine-validate/badge.svg?branch=master)](https://coveralls.io/github/CodeEngineOrg/code-engine-validate)
-[![Dependencies](https://david-dm.org/CodeEngineOrg/code-engine-validate.svg)](https://david-dm.org/CodeEngineOrg/code-engine-validate)
+[![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/validate/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/validate)
+[![Dependencies](https://david-dm.org/JS-DevTools/validate.svg)](https://david-dm.org/JS-DevTools/validate)
 
-[![npm](https://img.shields.io/npm/v/@code-engine/validate.svg)](https://www.npmjs.com/package/@code-engine/validate)
-[![License](https://img.shields.io/npm/l/@code-engine/validate.svg)](LICENSE)
-[![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/CodeEngineOrg/code-engine-validate)
+[![npm](https://img.shields.io/npm/v/@jsdevtools/validate.svg)](https://www.npmjs.com/package/@jsdevtools/validate)
+[![License](https://img.shields.io/npm/l/@jsdevtools/validate.svg)](LICENSE)
+[![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/JS-DevTools/validate)
 
 
 
-This is a utility library that's used inside [CodeEngine](https://engine.codes/) to validate inputs.
+Installation
+--------------------------
+You can install this library via [npm](https://docs.npmjs.com/about-npm/).
 
-> **NOTE:** This is an **internal library** that is only intended to be used by CodeEngine. Using it outside of CodeEngine is discouraged.
+```bash
+npm install @jsdevtools/validate
+```
 
 
 
@@ -32,7 +37,7 @@ Validates any value that is not `undefined`. (even `null` and `NaN`)
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.value(0);                    // ✔
 validate.value(false);                // ✔
@@ -52,7 +57,7 @@ Validates a value that is one of the specified values.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.value.oneOf("a", ["a", "b", "c"]);     // ✔
 validate.value.oneOf(4, [1, 2, 3, 4, 5]);       // ✔
@@ -71,7 +76,7 @@ Validates a value that is the specified type.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.type("John", String);          // ✔
 validate.type(42, Number);              // ✔
@@ -98,7 +103,7 @@ Validates a value that is the specified type.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.type.oneOf("John", [Number, String, Boolean]);           // ✔
 validate.type.oneOf(42, [Number, BigInt, Date]);                  // ✔
@@ -119,7 +124,7 @@ Validates a primitive string value (including empty strings).
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.type.string("John");                      // ✔
 validate.type.string("");                          // ✔
@@ -141,7 +146,7 @@ Validates a primitive number value (**not** including `NaN`).
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.type.number(0)                     // ✔
 validate.type.number(123)                   // ✔
@@ -163,7 +168,7 @@ Validates a primitive boolean value.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.type.boolean(false)                 // ✔
 validate.type.boolean(true)                  // ✔
@@ -183,7 +188,7 @@ Validates an object (**not** including `null`).
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.type.object({})                 // ✔
 validate.type.object(/^regex$/)          // ✔
@@ -205,7 +210,7 @@ Validates any type of function, including async, generators, arrow functions, cl
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.type.function(Object)                   // ✔
 validate.type.function(Object.toString)          // ✔
@@ -231,7 +236,7 @@ Validates a string with at least one character (including whitespace).
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.string.nonEmpty("John")                   // ✔
 validate.string.nonEmpty("    ")                   // ✔
@@ -252,7 +257,7 @@ Validates a string with at least one non-whitespace character.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.string.nonWhitespace("John")                   // ✔
 validate.string.nonWhitespace("  a  ")                  // ✔
@@ -274,7 +279,7 @@ Validates a string with at least the specified number of characters (including w
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.string.minLength("John", 1)                // ✔
 validate.string.minLength("  a  ", 5)               // ✔
@@ -294,7 +299,7 @@ Validates a string with no more than the specified number of characters (includi
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.string.maxLength("John", 10)               // ✔
 validate.string.maxLength("  a  ", 5)               // ✔
@@ -314,7 +319,7 @@ Validates a string with the specified number of characters (including whitespace
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.string.length("John", 1, 10)            // ✔
 validate.string.length("  a  ", 5, 25)           // ✔
@@ -336,7 +341,7 @@ Validates an integer value (positive or negative).
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.number.integer(0);               // ✔
 validate.number.integer(42);              // ✔
@@ -356,7 +361,7 @@ Validates a positive integer value (one or more).
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.number.integer.positive(42);              // ✔
 validate.number.integer.positive(12345.0);         // ✔
@@ -374,7 +379,7 @@ Validates an integer value that is zero or greater.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@code-engine/validate";
+import validate from "@jsdevtools/validate";
 
 validate.number.integer.nonNegative(0);               // ✔
 validate.number.integer.nonNegative(42);              // ✔
@@ -387,13 +392,13 @@ validate.number.integer.nonNegative(-42);             // ❌
 
 Contributing
 --------------------------
-Contributions, enhancements, and bug-fixes are welcome!  [File an issue](https://github.com/CodeEngineOrg/code-engine-validate/issues) on GitHub and [submit a pull request](https://github.com/CodeEngineOrg/code-engine-validate/pulls).
+Contributions, enhancements, and bug-fixes are welcome!  [File an issue](https://github.com/JS-DevTools/validate/issues) on GitHub and [submit a pull request](https://github.com/JS-DevTools/validate/pulls).
 
 #### Building
 To build the project locally on your computer:
 
 1. __Clone this repo__<br>
-`git clone https://github.com/CodeEngineOrg/code-engine-validate.git`
+`git clone https://github.com/JS-DevTools/validate.git`
 
 2. __Install dependencies__<br>
 `npm install`
@@ -408,9 +413,9 @@ To build the project locally on your computer:
 
 License
 --------------------------
-@code-engine/validate is 100% free and open-source, under the [MIT license](LICENSE). Use it however you want.
+@jsdevtools/validate is 100% free and open-source, under the [MIT license](LICENSE). Use it however you want.
 
-This package is [Treeware](http://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/CodeEngineOrg/code-engine-validate) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
+This package is [Treeware](http://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/JS-DevTools/validate) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
 
 
 
@@ -418,6 +423,6 @@ Big Thanks To
 --------------------------
 Thanks to these awesome companies for their support of Open Source developers ❤
 
-[![Travis CI](https://engine.codes/img/badges/travis-ci.svg)](https://travis-ci.com)
-[![SauceLabs](https://engine.codes/img/badges/sauce-labs.svg)](https://saucelabs.com)
-[![Coveralls](https://engine.codes/img/badges/coveralls.svg)](https://coveralls.io)
+[![Travis CI](https://jstools.dev/img/badges/travis-ci.svg)](https://travis-ci.com)
+[![SauceLabs](https://jstools.dev/img/badges/sauce-labs.svg)](https://saucelabs.com)
+[![Coveralls](https://jstools.dev/img/badges/coveralls.svg)](https://coveralls.io)

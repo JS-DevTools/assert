@@ -1,4 +1,4 @@
-import stringify from "@code-engine/stringify";
+import { humanize } from "@jsdevtools/humanize-anything";
 import { ono } from "@jsdevtools/ono";
 import { type } from "./type";
 
@@ -72,7 +72,7 @@ function validateNonWhitespace<T extends string>(value: T | undefined, fieldName
   value = validateNonEmpty(value, fieldName, defaultValue);
 
   if (value.trimStart().length === 0) {
-    throw ono(`Invalid ${fieldName}: ${stringify(value)}. It cannot be all whitespace.`);
+    throw ono(`Invalid ${fieldName}: ${humanize(value)}. It cannot be all whitespace.`);
   }
 
   return value;
@@ -87,23 +87,23 @@ value: T | undefined, minLength = 1, maxLength = Infinity, fieldName = "value", 
     let minChars = minLength === 1 ? "1 character" : `${minLength} characters`;
 
     if (minLength === 1) {
-      throw ono.range(`Invalid ${fieldName}: ${stringify(value)}. It cannot be empty.`);
+      throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. It cannot be empty.`);
     }
     else if (minLength === maxLength) {
-      throw ono.range(`Invalid ${fieldName}: ${stringify(value)}. It must be exactly ${minChars}.`);
+      throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. It must be exactly ${minChars}.`);
     }
     else {
-      throw ono.range(`Invalid ${fieldName}: ${stringify(value)}. It should be at least ${minChars}.`);
+      throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. It should be at least ${minChars}.`);
     }
   }
   else if (value.length > maxLength) {
     let maxChars = maxLength === 1 ? "1 character" : `${maxLength} characters`;
 
     if (minLength === maxLength) {
-      throw ono.range(`Invalid ${fieldName}: ${stringify(value)}. It must be exactly ${maxChars}.`);
+      throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. It must be exactly ${maxChars}.`);
     }
     else {
-      throw ono.range(`Invalid ${fieldName}: ${stringify(value)}. It cannot be more than ${maxChars}.`);
+      throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. It cannot be more than ${maxChars}.`);
     }
   }
 
