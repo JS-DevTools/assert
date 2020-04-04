@@ -14,6 +14,12 @@ export interface AssertNumber {
   <T extends number>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
+   * Asserts that a value is a numeric value
+   * (positive or negative, integer or float, finite or infinite, but **not** `NaN`).
+   */
+  (value: unknown, fieldName?: string, defaultValue?: unknown): number;
+
+  /**
    * Asserts that a value is an integer value (positive or negative).
    */
   integer: AssertInteger;
@@ -29,14 +35,29 @@ export interface AssertInteger {
   <T extends number>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
+   * Asserts that a value is an integer value (positive or negative).
+   */
+  (value: unknown, fieldName?: string, defaultValue?: unknown): number;
+
+  /**
    * Asserts that a value is a positive integer value (one or more).
    */
   positive<T extends number>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
+   * Asserts that a value is a positive integer value (one or more).
+   */
+  positive(value: unknown, fieldName?: string, defaultValue?: unknown): number;
+
+  /**
    * Asserts that a value is an integer value that is zero or greater.
    */
   nonNegative<T extends number>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
+
+  /**
+   * Asserts that a value is an integer value that is zero or greater.
+   */
+  nonNegative(value: unknown, fieldName?: string, defaultValue?: unknown): number;
 }
 
 

@@ -23,10 +23,21 @@ export interface AssertType {
   string<T extends string>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
+   * Asserts that a value is a string (including empty strings).
+   */
+  string(value: unknown, fieldName?: string, defaultValue?: unknown): string;
+
+  /**
    * Asserts that a value is a numeric value
    * (positive or negative, integer or float, finite or infinite, but **not** `NaN`).
    */
   number<T extends number>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
+
+  /**
+   * Asserts that a value is a numeric value
+   * (positive or negative, integer or float, finite or infinite, but **not** `NaN`).
+   */
+  number(value: unknown, fieldName?: string, defaultValue?: unknown): number;
 
   /**
    * Asserts that a value is a boolean (must be exactly `true` or `false`, not just "truthy" or "falsy").
@@ -34,14 +45,29 @@ export interface AssertType {
   boolean<T extends boolean>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
+   * Asserts that a value is a boolean (must be exactly `true` or `false`, not just "truthy" or "falsy").
+   */
+  boolean(value: unknown, fieldName?: string, defaultValue?: unknown): boolean;
+
+  /**
    * Asserts that a value is an object (including empty objects, but **not** including `null`).
    */
   object<T extends object>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
+   * Asserts that a value is an object (including empty objects, but **not** including `null`).
+   */
+  object(value: unknown, fieldName?: string, defaultValue?: unknown): object;
+
+  /**
    * Asserts that a value is a function (including classes, async functions, arrow functions, generator functions).
    */
   function<T extends Function>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
+
+  /**
+   * Asserts that a value is a function (including classes, async functions, arrow functions, generator functions).
+   */
+  function(value: unknown, fieldName?: string, defaultValue?: unknown): Function;
 }
 
 

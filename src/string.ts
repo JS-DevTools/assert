@@ -12,9 +12,19 @@ export interface AssertString {
   <T extends string>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
+   * Asserts that a value is a string value (including empty strings).
+   */
+  (value: unknown, fieldName?: string, defaultValue?: unknown): string;
+
+  /**
    * Asserts that a value is a string with at least one character (including whitespace).
    */
   nonEmpty<T extends string>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
+
+  /**
+   * Asserts that a value is a string with at least one character (including whitespace).
+   */
+  nonEmpty(value: unknown, fieldName?: string, defaultValue?: unknown): string;
 
   /**
    * Asserts that a value is a string with at least one non-whitespace character.
@@ -22,9 +32,19 @@ export interface AssertString {
   nonWhitespace<T extends string>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
+   * Asserts that a value is a string with at least one non-whitespace character.
+   */
+  nonWhitespace(value: unknown, fieldName?: string, defaultValue?: unknown): string;
+
+  /**
    * Asserts that a value is a string with at least the specified number of characters.
    */
   minLength<T extends string>(value: T | undefined, minLength: number, fieldName?: string, defaultValue?: T): T;
+
+  /**
+   * Asserts that a value is a string with at least the specified number of characters.
+   */
+  minLength(value: unknown, minLength: number, fieldName?: string, defaultValue?: unknown): string;
 
   /**
    * Asserts that a value is a string with no more than the specified number of characters.
@@ -32,10 +52,20 @@ export interface AssertString {
   maxLength<T extends string>(value: T | undefined, maxLength: number, fieldName?: string, defaultValue?: T): T;
 
   /**
+   * Asserts that a value is a string with no more than the specified number of characters.
+   */
+  maxLength(value: unknown, maxLength: number, fieldName?: string, defaultValue?: unknown): string;
+
+  /**
    * Asserts that a value is a string with the specified number of characters.
    */
   length<T extends string>(
     value: T | undefined, minLength: number, maxLength: number, fieldName?: string, defaultValue?: T): T;
+
+  /**
+   * Asserts that a value is a string with the specified number of characters.
+   */
+  length(value: unknown, minLength: number, maxLength: number, fieldName?: string, defaultValue?: unknown): string;
 }
 
 
