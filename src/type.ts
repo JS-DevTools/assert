@@ -71,7 +71,8 @@ function validateNumber<T extends number>(value: T | undefined, fieldName = "val
   value = validateValue(value, fieldName, defaultValue);
 
   if (typeof value !== "number" || Number.isNaN(value)) {
-    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected a number.`);
+    let humanized = (value as unknown) instanceof Number ? "Number" : humanize(value);
+    throw ono.type(`Invalid ${fieldName}: ${humanized}. Expected a number.`);
   }
 
   return value;
@@ -82,7 +83,8 @@ function validateBoolean<T extends boolean>(value: T | undefined, fieldName = "v
   value = validateValue(value, fieldName, defaultValue);
 
   if (typeof value !== "boolean") {
-    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected a boolean.`);
+    let humanized = (value as unknown) instanceof Boolean ? "Boolean" : humanize(value);
+    throw ono.type(`Invalid ${fieldName}: ${humanized}. Expected a boolean.`);
   }
 
   return value;

@@ -1,3 +1,4 @@
+/* eslint-disable no-new-wrappers */
 "use strict";
 
 const { validate } = require("../../");
@@ -46,6 +47,7 @@ describe("validate.string()", () => {
     expect(invalid(Number.MAX_VALUE)).to.throw(TypeError, "Invalid value: 1.7976931348623157e+308. Expected a string.");
     expect(invalid(String)).to.throw(TypeError, "Invalid value: function. Expected a string.");
     expect(invalid(new Date())).to.throw(TypeError, "Invalid value: Date. Expected a string.");
+    expect(invalid(new String())).to.throw(TypeError, "Invalid value: String. Expected a string.");
     expect(invalid(/1234/)).to.throw(TypeError, "Invalid value: /1234/. Expected a string.");
     expect(invalid({ foo: "bar" })).to.throw(TypeError, "Invalid value: {foo}. Expected a string.");
     expect(invalid([1, 2, 3])).to.throw(TypeError, "Invalid value: [1,2,3]. Expected a string.");
@@ -64,6 +66,7 @@ describe("validate.string()", () => {
     expect(invalidDefault(Number.MAX_VALUE)).to.throw(TypeError, "Invalid name: 1.7976931348623157e+308. Expected a string.");
     expect(invalidDefault(String)).to.throw(TypeError, "Invalid name: function. Expected a string.");
     expect(invalidDefault(new Date())).to.throw(TypeError, "Invalid name: Date. Expected a string.");
+    expect(invalidDefault(new String())).to.throw(TypeError, "Invalid name: String. Expected a string.");
     expect(invalidDefault(/1234/)).to.throw(TypeError, "Invalid name: /1234/. Expected a string.");
     expect(invalidDefault({ foo: "bar" })).to.throw(TypeError, "Invalid name: {foo}. Expected a string.");
     expect(invalidDefault([1, 2, 3])).to.throw(TypeError, "Invalid name: [1,2,3]. Expected a string.");

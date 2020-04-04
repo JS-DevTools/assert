@@ -1,3 +1,4 @@
+/* eslint-disable no-new-wrappers */
 "use strict";
 
 const { validate } = require("../../");
@@ -30,6 +31,7 @@ describe("validate.type.boolean()", () => {
     expect(invalid("Hello, world!")).to.throw(TypeError, "Invalid value: \"Hello, world!\". Expected a boolean.");
     expect(invalid(/regex/)).to.throw(TypeError, "Invalid value: /regex/. Expected a boolean.");
     expect(invalid(new Date())).to.throw(TypeError, "Invalid value: Date. Expected a boolean.");
+    expect(invalid(new Boolean())).to.throw(TypeError, "Invalid value: Boolean. Expected a boolean.");
   });
 
   it("should throw an error for invalid defaults", () => {
@@ -47,6 +49,7 @@ describe("validate.type.boolean()", () => {
     expect(invalidDefault("Hello, world!")).to.throw(TypeError, "Invalid thing: \"Hello, world!\". Expected a boolean.");
     expect(invalidDefault(/regex/)).to.throw(TypeError, "Invalid thing: /regex/. Expected a boolean.");
     expect(invalidDefault(new Date())).to.throw(TypeError, "Invalid thing: Date. Expected a boolean.");
+    expect(invalidDefault(new Boolean())).to.throw(TypeError, "Invalid thing: Boolean. Expected a boolean.");
   });
 
 });

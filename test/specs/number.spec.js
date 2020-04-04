@@ -1,3 +1,4 @@
+/* eslint-disable no-new-wrappers */
 "use strict";
 
 const { validate } = require("../../");
@@ -39,6 +40,7 @@ describe("validate.number()", () => {
     expect(invalid("")).to.throw(TypeError, "Invalid value: \"\". Expected a number.");
     expect(invalid("Hello, World")).to.throw(TypeError, "Invalid value: \"Hello, World\". Expected a number.");
     expect(invalid(new Date())).to.throw(TypeError, "Invalid value: Date. Expected a number.");
+    expect(invalid(new Number())).to.throw(TypeError, "Invalid value: Number. Expected a number.");
     expect(invalid(/1234/)).to.throw(TypeError, "Invalid value: /1234/. Expected a number.");
     expect(invalid({ foo: "bar" })).to.throw(TypeError, "Invalid value: {foo}. Expected a number.");
     expect(invalid([1, 2, 3])).to.throw(TypeError, "Invalid value: [1,2,3]. Expected a number.");
@@ -54,6 +56,7 @@ describe("validate.number()", () => {
     expect(negative(NaN)).to.throw(TypeError, "Invalid latitude: NaN. Expected a number.");
     expect(negative("")).to.throw(TypeError, "Invalid latitude: \"\". Expected a number.");
     expect(negative(new Date())).to.throw(TypeError, "Invalid latitude: Date. Expected a number.");
+    expect(negative(new Number())).to.throw(TypeError, "Invalid latitude: Number. Expected a number.");
   });
 
 });
