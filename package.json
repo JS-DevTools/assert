@@ -1,6 +1,6 @@
 {
   "name": "@jsdevtools/assert",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An assertion library with user-friendly error messages",
   "keywords": [
     "assert",
