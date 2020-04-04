@@ -14,6 +14,18 @@ Validate
 
 
 
+Features
+--------------------------
+- When validation succeeds, the value is returned. Useful for assertion + assignment.
+
+- When validation fails, the appropriate error type is thrown (e.g. `TypeError`, `RangeError`, etc.)
+
+- Error messages include the invalid value, humanized and sanitized
+
+- You can customize the field name used in error messages
+
+
+
 Installation
 --------------------------
 You can install this library via [npm](https://docs.npmjs.com/about-npm/).
@@ -44,7 +56,7 @@ validate.value(false);                // ✔
 validate.value(null);                 // ✔
 validate.value(NaN);                  // ✔
 
-validate.value(undefined);            // ❌
+validate.value(undefined);            // ❌ Invalid value: undefined. A value is required.
 ```
 
 
@@ -63,7 +75,7 @@ validate.value.oneOf("a", ["a", "b", "c"]);     // ✔
 validate.value.oneOf(4, [1, 2, 3, 4, 5]);       // ✔
 validate.value.oneOf(true, [1, true, "yes"]);   // ✔
 
-validate.value.oneOf("b", ["x", "y", "z"]);     // ❌
+validate.value.oneOf("b", ["x", "y", "z"]);     // ❌ Invalid value: "b". Expected "x", "y", or "z".
 ```
 
 
@@ -86,11 +98,11 @@ validate.type({ x: 1 }, Object);        // ✔
 validate.type(/^regex$/, RegExp);       // ✔
 validate.type(new Date(), Date);        // ✔
 
-validate.type("Fred", Object);          // ❌
-validate.type(100, BigInt);             // ❌
-validate.type(undefined, null);         // ❌
-validate.type(null, Object);            // ❌
-validate.type(new Date(), RangeError);  // ❌
+validate.type("Fred", Object);          // ❌ Invalid value: "Fred". Expected an Object.
+validate.type(100, BigInt);             // ❌ Invalid value: 100. Expected a bigint.
+validate.type(undefined, null);         // ❌ Invalid value: undefined. Expected null.
+validate.type(null, Object);            // ❌ Invalid value: null. Expected an Object.
+validate.type(new Date(), RangeError);  // ❌ Invalid value: Date. Expected a RangeError.
 ```
 
 
@@ -110,9 +122,9 @@ validate.type.oneOf(42, [Number, BigInt, Date]);                  // ✔
 validate.type.oneOf(null, [null, undefined]);                     // ✔
 validate.type.oneOf(new RangeError(), [TypeError, RangeError]);   // ✔
 
-validate.type.oneOf("Fred", [Object, Number, Boolean]);           // ❌
-validate.type.oneOf(undefined, [Boolean, Number, null]);          // ❌
-validate.type.oneOf(new SyntaxError(), [TypeError, RangeError]);  // ❌
+validate.type.oneOf("Fred", [Number, Boolean, Object]);           // ❌ Invalid value: "Fred". Expected a number, boolean, or Object.
+validate.type.oneOf(undefined, [Boolean, Number, null]);          // ❌ Invalid value: undefined. Expected a boolean, number, or null.
+validate.type.oneOf(new SyntaxError(), [TypeError, RangeError]);  // ❌ Invalid value: SyntaxError. Expected a TypeError or RangeError.
 ```
 
 
@@ -132,9 +144,9 @@ validate.type.string("           ");               // ✔
 validate.type.string("\n");                        // ✔
 validate.type.string("\t");                        // ✔
 
-validate.type.string(123);                         // ❌
-validate.type.string(null);                        // ❌
-validate.type.string(new String());                // ❌
+validate.type.string(123);                         // ❌ Invalid value: 123. Expected a string.
+validate.type.string(null);                        // ❌ Invalid value: null. Expected a string.
+validate.type.string(new String());                // ❌ Invalid value: String. Expected a string.
 ```
 
 
@@ -154,9 +166,9 @@ validate.type.number(-42.1245)              // ✔
 validate.type.number(Math.PI)               // ✔
 validate.type.number(Infinity)              // ✔
 
-validate.type.number("123");                // ❌
-validate.type.number(NaN);                  // ❌
-validate.type.number(new Number());         // ❌
+validate.type.number("123");                // ❌ Invalid value: "123". Expected a number.
+validate.type.number(NaN);                  // ❌ Invalid value: NaN. Expected a number.
+validate.type.number(new Number());         // ❌ Invalid value: Number. Expected a number.
 ```
 
 
@@ -173,10 +185,10 @@ import validate from "@jsdevtools/validate";
 validate.type.boolean(false)                 // ✔
 validate.type.boolean(true)                  // ✔
 
-validate.type.boolean("true");               // ❌
-validate.type.boolean(0);                    // ❌
-validate.type.boolean(1);                    // ❌
-validate.type.boolean(new Boolean());        // ❌
+validate.type.boolean("true");               // ❌ Invalid value: "true". Expected a boolean.
+validate.type.boolean(0);                    // ❌ Invalid value: 0. Expected a boolean.
+validate.type.boolean(1);                    // ❌ Invalid value: 1. Expected a boolean.
+validate.type.boolean(new Boolean());        // ❌ Invalid value: Boolean. Expected a boolean.
 ```
 
 
@@ -196,9 +208,9 @@ validate.type.object(new Date())         // ✔
 validate.type.object(new Object())       // ✔
 validate.type.object(Object.prototype)   // ✔
 
-validate.type.object(null);              // ❌
-validate.type.object(undefined);         // ❌
-validate.type.object(Object);            // ❌
+validate.type.object(null);              // ❌ Invalid value: null. Expected an object.
+validate.type.object(undefined);         // ❌ Invalid value: undefined. A value is required.
+validate.type.object(Object);            // ❌ Invalid value: function. Expected an object.
 ```
 
 
@@ -218,9 +230,9 @@ validate.type.function(function foo() {})        // ✔
 validate.type.function(() => null)               // ✔
 validate.type.function(class Foo {})             // ✔
 
-validate.type.function(null);                    // ❌
-validate.type.function(new Object());            // ❌
-validate.type.function("function");              // ❌
+validate.type.function(null);                    // ❌ Invalid value: null. Expected a function.
+validate.type.function(new Object());            // ❌ Invalid value: {}. Expected a function.
+validate.type.function("function");              // ❌ Invalid value: "function". Expected a function.
 ```
 
 
@@ -243,9 +255,9 @@ validate.string.nonEmpty("    ")                   // ✔
 validate.string.nonEmpty("\n")                     // ✔
 validate.string.nonEmpty("\t")                     // ✔
 
-validate.string.nonEmpty("");                      // ❌
-validate.string.nonEmpty(null);                    // ❌
-validate.string.nonEmpty(new String());            // ❌
+validate.string.nonEmpty("");                      // ❌ Invalid value: "". It cannot be empty.
+validate.string.nonEmpty(null);                    // ❌ Invalid value: null. Expected a string.
+validate.string.nonEmpty(new String());            // ❌ Invalid value: String. Expected a string.
 ```
 
 
@@ -262,11 +274,11 @@ import validate from "@jsdevtools/validate";
 validate.string.nonWhitespace("John")                   // ✔
 validate.string.nonWhitespace("  a  ")                  // ✔
 
-validate.string.nonWhitespace("");                      // ❌
-validate.string.nonWhitespace("    ");                  // ❌
-validate.string.nonWhitespace("\n")                     // ❌
-validate.string.nonWhitespace("\t")                     // ❌
-validate.string.nonWhitespace(new String());            // ❌
+validate.string.nonWhitespace("");                      // ❌ Invalid value: "". It cannot be empty.
+validate.string.nonWhitespace("    ");                  // ❌ Invalid value: "    ". It cannot be all whitespace.
+validate.string.nonWhitespace("\n")                     // ❌ Invalid value: "\n". It cannot be all whitespace.
+validate.string.nonWhitespace("\t")                     // ❌ Invalid value: "\t". It cannot be all whitespace.
+validate.string.nonWhitespace(new String());            // ❌ Invalid value: String. Expected a string.
 ```
 
 
@@ -285,8 +297,8 @@ validate.string.minLength("John", 1)                // ✔
 validate.string.minLength("  a  ", 5)               // ✔
 validate.string.minLength("", 0)                    // ✔
 
-validate.string.minLength("", 1);                   // ❌
-validate.string.minLength("John", 10);              // ❌
+validate.string.minLength("", 1);                   // ❌ Invalid value: "". It cannot be empty.
+validate.string.minLength("John", 10);              // ❌ Invalid value: "John". It should be at least 10 characters.
 ```
 
 
@@ -305,16 +317,16 @@ validate.string.maxLength("John", 10)               // ✔
 validate.string.maxLength("  a  ", 5)               // ✔
 validate.string.maxLength("", 50)                   // ✔
 
-validate.string.maxLength("John Doe", 5);           // ❌
+validate.string.maxLength("John Doe", 5);           // ❌ Invalid value: "John Doe". It cannot be more than 5 characters.
 ```
 
 
-### `validate.string.length(value, minLength, maxLength, [fieldName], [defaultValue])`
+### `validate.string.length(value, minLength, [maxLength], [fieldName], [defaultValue])`
 Validates a string with the specified number of characters (including whitespace)
 
 - **value** - The value to validate
 - **minLength** - The minimum allowed length
-- **maxLength** - The maximum allowed length
+- **maxLength** - (optional) The maximum allowed length. If not specified, it defaults to the same as `minLength`.
 - **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
@@ -325,7 +337,9 @@ validate.string.length("John", 1, 10)            // ✔
 validate.string.length("  a  ", 5, 25)           // ✔
 validate.string.length("", 0, 100)               // ✔
 
-validate.string.length("John Doe", 1, 5);        // ❌
+validate.string.length("John Doe", 1, 5);        // ❌ Invalid value: "John Doe". It cannot be more than 5 characters.
+validate.string.length("John Doe", 20, 50);      // ❌ Invalid value: "John Doe". It should be at least 20 characters.
+validate.string.length("John Doe", 5);           // ❌ Invalid value: "John Doe". It must be exactly 5 characters.
 ```
 
 
@@ -348,8 +362,9 @@ validate.number.integer(42);              // ✔
 validate.number.integer(-42);             // ✔
 validate.number.integer(12345.0);         // ✔
 
-validate.number.integer(Math.PI);         // ❌
-validate.number.integer(Infinity);        // ❌
+validate.number.integer(Math.PI);         // ❌ Invalid value: 3.141592653589793. Expected an integer.
+validate.number.integer(Infinity);        // ❌ Invalid value: Infinity. Expected an integer.
+validate.number.integer(NaN);             // ❌ Invalid value: NaN. Expected a number.
 ```
 
 
@@ -366,8 +381,10 @@ import validate from "@jsdevtools/validate";
 validate.number.integer.positive(42);              // ✔
 validate.number.integer.positive(12345.0);         // ✔
 
-validate.number.integer.positive(0);               // ❌
-validate.number.integer.positive(-42);             // ❌
+validate.number.integer.positive(0);               // ❌ Invalid value: 0. Expected a positive integer.
+validate.number.integer.positive(-42);             // ❌ Invalid value: -42. Expected a positive integer.
+validate.number.integer.positive(Infinity);        // ❌ Invalid value: Infinity. Expected an integer.
+validate.number.integer.positive(NaN);             // ❌ Invalid value: NaN. Expected a number.
 ```
 
 
@@ -385,7 +402,9 @@ validate.number.integer.nonNegative(0);               // ✔
 validate.number.integer.nonNegative(42);              // ✔
 validate.number.integer.nonNegative(12345.0);         // ✔
 
-validate.number.integer.nonNegative(-42);             // ❌
+validate.number.integer.nonNegative(-42);             // ❌ Invalid value: -42. Expected zero or greater.
+validate.number.integer.nonNegative(-Infinity);       // ❌ Invalid value: -Infinity. Expected an integer.
+validate.number.integer.nonNegative(NaN);             // ❌ Invalid value: NaN. Expected a number.
 ```
 
 
