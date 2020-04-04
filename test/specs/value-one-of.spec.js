@@ -1,20 +1,20 @@
 "use strict";
 
-const { validate } = require("../../");
+const { assert } = require("../../");
 const { expect } = require("chai");
 
-describe("validate.value.oneOf()", () => {
+describe("assert.value.oneOf()", () => {
 
-  it("should validate values that are in the list of allowed values", () => {
-    expect(validate.value.oneOf(1.0, [1, 2, 3, 4, 5])).to.equal(1);
-    expect(validate.value.oneOf(false, [true, false])).to.equal(false);
-    expect(validate.value.oneOf("Wilma", ["Fred", "Barney", "Wilma", "Betty"])).to.equal("Wilma");
+  it("should assert values that are in the list of allowed values", () => {
+    expect(assert.value.oneOf(1.0, [1, 2, 3, 4, 5])).to.equal(1);
+    expect(assert.value.oneOf(false, [true, false])).to.equal(false);
+    expect(assert.value.oneOf("Wilma", ["Fred", "Barney", "Wilma", "Betty"])).to.equal("Wilma");
   });
 
   it("should throw an error for values that are not in the list of allowed values", () => {
     function notAllowed (value, allowed) {
       return () => {
-        validate.value.oneOf(value, allowed);
+        assert.value.oneOf(value, allowed);
       };
     }
 
@@ -31,7 +31,7 @@ describe("validate.value.oneOf()", () => {
   it("should throw an error for invalid defaults", () => {
     function badDefault (allowed, defaultValue) {
       return () => {
-        validate.value.oneOf(undefined, allowed, "thing", defaultValue);
+        assert.value.oneOf(undefined, allowed, "thing", defaultValue);
       };
     }
 

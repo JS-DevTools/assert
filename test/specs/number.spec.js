@@ -1,37 +1,37 @@
 /* eslint-disable no-new-wrappers */
 "use strict";
 
-const { validate } = require("../../");
+const { assert } = require("../../");
 const { expect } = require("chai");
 
-describe("validate.number()", () => {
+describe("assert.number()", () => {
 
-  it("should validate numbers", () => {
-    expect(validate.number(1.0)).to.equal(1);
-    expect(validate.number(42)).to.equal(42);
-    expect(validate.number(-100)).to.equal(-100);
-    expect(validate.number(-1.234)).to.equal(-1.234);
-    expect(validate.number(Number.MIN_VALUE)).to.equal(Number.MIN_VALUE);
-    expect(validate.number(Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
-    expect(validate.number(Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
-    expect(validate.number(Number.EPSILON)).to.equal(Number.EPSILON);
+  it("should assert numbers", () => {
+    expect(assert.number(1.0)).to.equal(1);
+    expect(assert.number(42)).to.equal(42);
+    expect(assert.number(-100)).to.equal(-100);
+    expect(assert.number(-1.234)).to.equal(-1.234);
+    expect(assert.number(Number.MIN_VALUE)).to.equal(Number.MIN_VALUE);
+    expect(assert.number(Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
+    expect(assert.number(Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
+    expect(assert.number(Number.EPSILON)).to.equal(Number.EPSILON);
   });
 
-  it("should validate default values", () => {
-    expect(validate.number(undefined, "latitude", 1.0)).to.equal(1);
-    expect(validate.number(undefined, "latitude", 42)).to.equal(42);
-    expect(validate.number(undefined, "latitude", -100)).to.equal(-100);
-    expect(validate.number(undefined, "latitude", -1.234)).to.equal(-1.234);
-    expect(validate.number(undefined, "latitude", Number.MIN_VALUE)).to.equal(Number.MIN_VALUE);
-    expect(validate.number(undefined, "latitude", Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
-    expect(validate.number(undefined, "latitude", Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
-    expect(validate.number(undefined, "latitude", Number.EPSILON)).to.equal(Number.EPSILON);
+  it("should assert default values", () => {
+    expect(assert.number(undefined, "latitude", 1.0)).to.equal(1);
+    expect(assert.number(undefined, "latitude", 42)).to.equal(42);
+    expect(assert.number(undefined, "latitude", -100)).to.equal(-100);
+    expect(assert.number(undefined, "latitude", -1.234)).to.equal(-1.234);
+    expect(assert.number(undefined, "latitude", Number.MIN_VALUE)).to.equal(Number.MIN_VALUE);
+    expect(assert.number(undefined, "latitude", Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
+    expect(assert.number(undefined, "latitude", Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
+    expect(assert.number(undefined, "latitude", Number.EPSILON)).to.equal(Number.EPSILON);
   });
 
   it("should throw an error for invalid values", () => {
     function invalid (value) {
       return () => {
-        validate.number(value);
+        assert.number(value);
       };
     }
 
@@ -49,7 +49,7 @@ describe("validate.number()", () => {
   it("should throw an error for invalid defaults", () => {
     function negative (defaultValue) {
       return () => {
-        validate.number(undefined, "latitude", defaultValue);
+        assert.number(undefined, "latitude", defaultValue);
       };
     }
 

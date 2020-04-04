@@ -1,23 +1,23 @@
 "use strict";
 
-const { validate } = require("../../");
+const { assert } = require("../../");
 const { expect } = require("chai");
 
-describe("validate.number.integer()", () => {
+describe("assert.number.integer()", () => {
 
-  it("should validate integers", () => {
-    expect(validate.number.integer(1.0)).to.equal(1);
-    expect(validate.number.integer(42)).to.equal(42);
-    expect(validate.number.integer(-100)).to.equal(-100);
-    expect(validate.number.integer(-1)).to.equal(-1);
-    expect(validate.number.integer(Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
-    expect(validate.number.integer(Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
+  it("should assert integers", () => {
+    expect(assert.number.integer(1.0)).to.equal(1);
+    expect(assert.number.integer(42)).to.equal(42);
+    expect(assert.number.integer(-100)).to.equal(-100);
+    expect(assert.number.integer(-1)).to.equal(-1);
+    expect(assert.number.integer(Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
+    expect(assert.number.integer(Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
   });
 
   it("should throw an error for fractional numbers", () => {
     function fraction (value) {
       return () => {
-        validate.number.integer(value);
+        assert.number.integer(value);
       };
     }
 
@@ -30,7 +30,7 @@ describe("validate.number.integer()", () => {
   it("should throw an error for non-finite numbers", () => {
     function infinite (value) {
       return () => {
-        validate.number.integer(value);
+        assert.number.integer(value);
       };
     }
 
@@ -41,7 +41,7 @@ describe("validate.number.integer()", () => {
   it("should throw an error for invalid defaults", () => {
     function negative (defaultValue) {
       return () => {
-        validate.number.integer(undefined, "offset", defaultValue);
+        assert.number.integer(undefined, "offset", defaultValue);
       };
     }
 

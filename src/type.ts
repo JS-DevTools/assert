@@ -1,63 +1,64 @@
 // tslint:disable: ban-types no-null-undefined-union
 import { humanize } from "@jsdevtools/humanize-anything";
 import { ono } from "@jsdevtools/ono";
-import { value as validateValue } from "./value";
+import { value as assertValue } from "./value";
 
 /**
- * Validates a value that is the specified type.
+ * Asserts that a value is the specified type.
  */
-export interface ValidateType {
+export interface AssertType {
   /**
-   * Validates a value that is the specified type.
+   * Asserts that a value is the specified type.
    */
   <T>(value: T | undefined, type: Function | undefined | null, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a value that is one of the specified types.
+   * Asserts that a value is one of the specified types.
    */
   oneOf<T>(value: T | undefined, types: Array<Function | undefined | null>, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a string value (including empty strings).
+   * Asserts that a value is a string (including empty strings).
    */
   string<T extends string>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a numeric value (positive or negative, integer or float, finite or infinite, but **not** `NaN`).
+   * Asserts that a value is a numeric value
+   * (positive or negative, integer or float, finite or infinite, but **not** `NaN`).
    */
   number<T extends number>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a boolean value (must be exactly `true` or `false`, not just "truthy" or "falsy").
+   * Asserts that a value is a boolean (must be exactly `true` or `false`, not just "truthy" or "falsy").
    */
   boolean<T extends boolean>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates any object value (including empty objects, but **not** including `null`).
+   * Asserts that a value is an object (including empty objects, but **not** including `null`).
    */
   object<T extends object>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates any function value (including classes, async functions, arrow functions, generator functions).
+   * Asserts that a value is a function (including classes, async functions, arrow functions, generator functions).
    */
   function<T extends Function>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 }
 
 
 /**
- * Validates a value that is the specified type.
+ * Asserts that a value is the specified type.
  */
-export const type = validateType as ValidateType;
-type.oneOf = validateTypeOneOf;
-type.string = validateString;
-type.number = validateNumber;
-type.boolean = validateBoolean;
-type.object = validateObject;
-type.function = validateFunction;
+export const type = assertType as AssertType;
+type.oneOf = assertTypeOneOf;
+type.string = assertString;
+type.number = assertNumber;
+type.boolean = assertBoolean;
+type.object = assertObject;
+type.function = assertFunction;
 
 
-function validateString<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
-  value = validateValue(value, fieldName, defaultValue);
+function assertString<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+  value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "string") {
     throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected a string.`);
@@ -67,8 +68,8 @@ function validateString<T extends string>(value: T | undefined, fieldName = "val
 }
 
 
-function validateNumber<T extends number>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
-  value = validateValue(value, fieldName, defaultValue);
+function assertNumber<T extends number>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+  value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "number" || Number.isNaN(value)) {
     let humanized = (value as unknown) instanceof Number ? "Number" : humanize(value);
@@ -79,8 +80,8 @@ function validateNumber<T extends number>(value: T | undefined, fieldName = "val
 }
 
 
-function validateBoolean<T extends boolean>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
-  value = validateValue(value, fieldName, defaultValue);
+function assertBoolean<T extends boolean>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+  value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "boolean") {
     let humanized = (value as unknown) instanceof Boolean ? "Boolean" : humanize(value);
@@ -91,8 +92,8 @@ function validateBoolean<T extends boolean>(value: T | undefined, fieldName = "v
 }
 
 
-function validateObject<T extends object>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
-  value = validateValue(value, fieldName, defaultValue);
+function assertObject<T extends object>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+  value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "object" || value === null) {
     throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected an object.`);
@@ -102,8 +103,8 @@ function validateObject<T extends object>(value: T | undefined, fieldName = "val
 }
 
 
-function validateFunction<T extends Function>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
-  value = validateValue(value, fieldName, defaultValue);
+function assertFunction<T extends Function>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+  value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "function") {
     throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected a function.`);
@@ -113,13 +114,13 @@ function validateFunction<T extends Function>(value: T | undefined, fieldName = 
 }
 
 
-function validateType<T>(
+function assertType<T>(
 value: T | undefined, type: Function | undefined | null, fieldName = "value", defaultValue?: T): T {  // tslint:disable-line: no-shadowed-variable
-  return validateTypeOneOf(value, [type], fieldName, defaultValue);
+  return assertTypeOneOf(value, [type], fieldName, defaultValue);
 }
 
 
-function validateTypeOneOf<T>(
+function assertTypeOneOf<T>(
 value: T | undefined, types: Array<Function | undefined | null>, fieldName = "value", defaultValue?: T): T {
   if (value === undefined && defaultValue !== undefined) {
     value = defaultValue;

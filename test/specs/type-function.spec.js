@@ -1,38 +1,38 @@
 "use strict";
 
-const { validate } = require("../../");
+const { assert } = require("../../");
 const { expect } = require("chai");
 
-describe("validate.type.function()", () => {
+describe("assert.type.function()", () => {
 
-  it("should validate all types of functions", () => {
-    expect(validate.type.function(function foo () {})).to.be.a("function");
-    expect(validate.type.function(function () {})).to.be.a("function");
-    expect(validate.type.function(function* () {})).to.be.a("function");
-    expect(validate.type.function(async function () {})).to.be.a("function");
-    expect(validate.type.function(async function* () {})).to.be.a("function");
-    expect(validate.type.function(() => {})).to.be.a("function");
-    expect(validate.type.function(async () => {})).to.be.a("function");
-    expect(validate.type.function(new Date().toUTCString)).to.be.a("function");
-    expect(validate.type.function(class Foo {})).to.be.a("function");
+  it("should assert all types of functions", () => {
+    expect(assert.type.function(function foo () {})).to.be.a("function");
+    expect(assert.type.function(function () {})).to.be.a("function");
+    expect(assert.type.function(function* () {})).to.be.a("function");
+    expect(assert.type.function(async function () {})).to.be.a("function");
+    expect(assert.type.function(async function* () {})).to.be.a("function");
+    expect(assert.type.function(() => {})).to.be.a("function");
+    expect(assert.type.function(async () => {})).to.be.a("function");
+    expect(assert.type.function(new Date().toUTCString)).to.be.a("function");
+    expect(assert.type.function(class Foo {})).to.be.a("function");
   });
 
-  it("should validate default values", () => {
-    expect(validate.type.function(undefined, "method", function foo () {})).to.be.a("function");
-    expect(validate.type.function(undefined, "method", function () {})).to.be.a("function");
-    expect(validate.type.function(undefined, "method", function* () {})).to.be.a("function");
-    expect(validate.type.function(undefined, "method", async function () {})).to.be.a("function");
-    expect(validate.type.function(undefined, "method", async function* () {})).to.be.a("function");
-    expect(validate.type.function(undefined, "method", () => {})).to.be.a("function");
-    expect(validate.type.function(undefined, "method", async () => {})).to.be.a("function");
-    expect(validate.type.function(undefined, "method", new Date().toUTCString)).to.be.a("function");
-    expect(validate.type.function(undefined, "method", class Foo {})).to.be.a("function");
+  it("should assert default values", () => {
+    expect(assert.type.function(undefined, "method", function foo () {})).to.be.a("function");
+    expect(assert.type.function(undefined, "method", function () {})).to.be.a("function");
+    expect(assert.type.function(undefined, "method", function* () {})).to.be.a("function");
+    expect(assert.type.function(undefined, "method", async function () {})).to.be.a("function");
+    expect(assert.type.function(undefined, "method", async function* () {})).to.be.a("function");
+    expect(assert.type.function(undefined, "method", () => {})).to.be.a("function");
+    expect(assert.type.function(undefined, "method", async () => {})).to.be.a("function");
+    expect(assert.type.function(undefined, "method", new Date().toUTCString)).to.be.a("function");
+    expect(assert.type.function(undefined, "method", class Foo {})).to.be.a("function");
   });
 
   it("should throw an error for invalid values", () => {
     function invalid (value) {
       return () => {
-        validate.type.function(value);
+        assert.type.function(value);
       };
     }
 
@@ -51,7 +51,7 @@ describe("validate.type.function()", () => {
   it("should throw an error for invalid defaults", () => {
     function invalidDefault (defaultValue) {
       return () => {
-        validate.type.function(undefined, "thing", defaultValue);
+        assert.type.function(undefined, "thing", defaultValue);
       };
     }
 

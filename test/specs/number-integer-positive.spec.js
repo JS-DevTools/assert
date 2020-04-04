@@ -1,22 +1,22 @@
 "use strict";
 
-const { validate } = require("../../");
+const { assert } = require("../../");
 const { expect } = require("chai");
 
-describe("validate.number.integer.positive()", () => {
+describe("assert.number.integer.positive()", () => {
 
-  it("should validate positive integers", () => {
-    expect(validate.number.integer.positive(1.0)).to.equal(1);
-    expect(validate.number.integer.positive(42)).to.equal(42);
-    expect(validate.number.integer.positive(100)).to.equal(100);
-    expect(validate.number.integer.positive(Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
-    expect(validate.number.integer.positive(Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
+  it("should assert positive integers", () => {
+    expect(assert.number.integer.positive(1.0)).to.equal(1);
+    expect(assert.number.integer.positive(42)).to.equal(42);
+    expect(assert.number.integer.positive(100)).to.equal(100);
+    expect(assert.number.integer.positive(Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
+    expect(assert.number.integer.positive(Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
   });
 
   it("should throw an error for negative numbers", () => {
     function negative (value) {
       return () => {
-        validate.number.integer.positive(value);
+        assert.number.integer.positive(value);
       };
     }
 
@@ -27,7 +27,7 @@ describe("validate.number.integer.positive()", () => {
   it("should throw an error for invalid defaults", () => {
     function negative (defaultValue) {
       return () => {
-        validate.number.integer.positive(undefined, "age", defaultValue);
+        assert.number.integer.positive(undefined, "age", defaultValue);
       };
     }
 

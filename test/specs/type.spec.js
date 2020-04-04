@@ -2,50 +2,50 @@
 /* eslint-disable no-new-object, no-new-wrappers */
 "use strict";
 
-const { validate } = require("../../");
+const { assert } = require("../../");
 const { expect } = require("chai");
 
-describe("validate.type()", () => {
+describe("assert.type()", () => {
 
-  it("should validate special values", () => {
-    expect(validate.type(null, null)).to.equal(null);
-    expect(validate.type(undefined, undefined)).to.equal(undefined);
-    expect(validate.type(NaN, NaN)).to.satisfy(Number.isNaN);
+  it("should assert special values", () => {
+    expect(assert.type(null, null)).to.equal(null);
+    expect(assert.type(undefined, undefined)).to.equal(undefined);
+    expect(assert.type(NaN, NaN)).to.satisfy(Number.isNaN);
   });
 
-  it("should validate primitive values", () => {
-    expect(validate.type("Hello, world!", String)).to.equal("Hello, world!");
-    expect(validate.type(12345, Number)).to.equal(12345);
-    expect(validate.type(false, Boolean)).to.equal(false);
+  it("should assert primitive values", () => {
+    expect(assert.type("Hello, world!", String)).to.equal("Hello, world!");
+    expect(assert.type(12345, Number)).to.equal(12345);
+    expect(assert.type(false, Boolean)).to.equal(false);
   });
 
-  it("should validate wrapped primitive values", () => {
-    expect(validate.type(new String("Hello, world!"), String)).to.deep.equal(new String("Hello, world!"));
-    expect(validate.type(new Number(12345), Number)).to.deep.equal(new Number(12345));
-    expect(validate.type(new Boolean(false), Boolean)).to.deep.equal(new Boolean(false));
-    expect(validate.type(BigInt(123456789), BigInt)).to.deep.equal(BigInt(123456789));
-    expect(validate.type(Symbol("foo"), Symbol)).to.be.a("symbol");
+  it("should assert wrapped primitive values", () => {
+    expect(assert.type(new String("Hello, world!"), String)).to.deep.equal(new String("Hello, world!"));
+    expect(assert.type(new Number(12345), Number)).to.deep.equal(new Number(12345));
+    expect(assert.type(new Boolean(false), Boolean)).to.deep.equal(new Boolean(false));
+    expect(assert.type(BigInt(123456789), BigInt)).to.deep.equal(BigInt(123456789));
+    expect(assert.type(Symbol("foo"), Symbol)).to.be.a("symbol");
   });
 
-  it("should validate values that are instances of the type", () => {
-    expect(validate.type(/regex/, RegExp)).to.be.an.instanceOf(RegExp);
-    expect(validate.type(() => undefined, Function)).to.be.a("function");
-    expect(validate.type(new Date(), Date)).to.be.an.instanceOf(Date);
-    expect(validate.type(new Map(), Map)).to.be.an.instanceOf(Map);
-    expect(validate.type(new Set(), Set)).to.be.an.instanceOf(Set);
-    expect(validate.type(Buffer.alloc(0), Buffer)).to.be.an.instanceOf(Buffer);
+  it("should assert values that are instances of the type", () => {
+    expect(assert.type(/regex/, RegExp)).to.be.an.instanceOf(RegExp);
+    expect(assert.type(() => undefined, Function)).to.be.a("function");
+    expect(assert.type(new Date(), Date)).to.be.an.instanceOf(Date);
+    expect(assert.type(new Map(), Map)).to.be.an.instanceOf(Map);
+    expect(assert.type(new Set(), Set)).to.be.an.instanceOf(Set);
+    expect(assert.type(Buffer.alloc(0), Buffer)).to.be.an.instanceOf(Buffer);
   });
 
-  it("should validate default values", () => {
-    expect(validate.type(undefined, Number, "count", 12345)).to.equal(12345);
-    expect(validate.type(undefined, Array, "list", [])).to.deep.equal([]);
-    expect(validate.type(undefined, RegExp, "pattern", /regex/)).to.deep.equal(/regex/);
+  it("should assert default values", () => {
+    expect(assert.type(undefined, Number, "count", 12345)).to.equal(12345);
+    expect(assert.type(undefined, Array, "list", [])).to.deep.equal([]);
+    expect(assert.type(undefined, RegExp, "pattern", /regex/)).to.deep.equal(/regex/);
   });
 
   it("should throw an error for special values that are not allowed", () => {
     function notAllowed (value, allowed) {
       return () => {
-        validate.type(value, allowed, "thing");
+        assert.type(value, allowed, "thing");
       };
     }
 
@@ -62,7 +62,7 @@ describe("validate.type()", () => {
   it("should throw an error for primitive values of the wrong type", () => {
     function notAllowed (value, allowed) {
       return () => {
-        validate.type(value, allowed, "thing");
+        assert.type(value, allowed, "thing");
       };
     }
 
@@ -82,7 +82,7 @@ describe("validate.type()", () => {
   it("should throw an error for wrapped primitive values of the wrong type", () => {
     function notAllowed (value, allowed) {
       return () => {
-        validate.type(value, allowed, "thing");
+        assert.type(value, allowed, "thing");
       };
     }
 
@@ -105,7 +105,7 @@ describe("validate.type()", () => {
   it("should throw an error for values of the wrong type", () => {
     function notAllowed (value, allowed) {
       return () => {
-        validate.type(value, allowed, "thing");
+        assert.type(value, allowed, "thing");
       };
     }
 

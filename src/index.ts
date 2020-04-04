@@ -1,21 +1,10 @@
-import { number } from "./number";
-import { string } from "./string";
-import { type } from "./type";
-import { value } from "./value";
+import { assert } from "./assert";
 
-/**
- * Simple validation helpers with user-friendly error messages
- */
-export const validate = {
-  value,
-  type,
-  string,
-  number,
-};
+export { assert };
 
-// Export `validate` as the default export
+// Export `assert` as the default export
 // tslint:disable: no-default-export
-export default validate;
+export default assert;
 
 // CommonJS default export hack
 if (typeof module === "object" && typeof module.exports === "object") {

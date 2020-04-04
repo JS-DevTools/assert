@@ -3,36 +3,36 @@ import { ono } from "@jsdevtools/ono";
 import { type } from "./type";
 
 /**
- * Validates a string value (including empty strings).
+ * Asserts that a value is a string value (including empty strings).
  */
-export interface ValidateString {
+export interface AssertString {
   /**
-   * Validates a string value (including empty strings).
+   * Asserts that a value is a string value (including empty strings).
    */
   <T extends string>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a string with at least one character (including whitespace).
+   * Asserts that a value is a string with at least one character (including whitespace).
    */
   nonEmpty<T extends string>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a string with at least one non-whitespace character.
+   * Asserts that a value is a string with at least one non-whitespace character.
    */
   nonWhitespace<T extends string>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a string with at least the specified number of characters.
+   * Asserts that a value is a string with at least the specified number of characters.
    */
   minLength<T extends string>(value: T | undefined, minLength: number, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a string with no more than the specified number of characters.
+   * Asserts that a value is a string with no more than the specified number of characters.
    */
   maxLength<T extends string>(value: T | undefined, maxLength: number, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a string with the specified number of characters.
+   * Asserts that a value is a string with the specified number of characters.
    */
   length<T extends string>(
     value: T | undefined, minLength: number, maxLength: number, fieldName?: string, defaultValue?: T): T;
@@ -40,35 +40,35 @@ export interface ValidateString {
 
 
 /**
- * Validates a string value (including empty strings).
+ * Asserts that a value is a string value (including empty strings).
  */
 // tslint:disable-next-line: variable-name
-export const string = type.string as ValidateString;
-string.nonEmpty = validateNonEmpty;
-string.nonWhitespace = validateNonWhitespace;
-string.minLength = validateMinLength;
-string.maxLength = validateMaxLength;
-Object.defineProperty(string, "length", { value: validateLength });
+export const string = type.string as AssertString;
+string.nonEmpty = assertNonEmpty;
+string.nonWhitespace = assertNonWhitespace;
+string.minLength = assertMinLength;
+string.maxLength = assertMaxLength;
+Object.defineProperty(string, "length", { value: assertLength });
 
 
-function validateNonEmpty<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
-  return validateStringLength(value, 1, Infinity, fieldName, defaultValue);
+function assertNonEmpty<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+  return assertStringLength(value, 1, Infinity, fieldName, defaultValue);
 }
 
 
-function validateMinLength<T extends string>(
+function assertMinLength<T extends string>(
 value: T | undefined, minLength: number, fieldName = "value", defaultValue?: T): T {
-  return validateStringLength(value, minLength, Infinity, fieldName, defaultValue);
+  return assertStringLength(value, minLength, Infinity, fieldName, defaultValue);
 }
 
 
-function validateMaxLength<T extends string>(
+function assertMaxLength<T extends string>(
 value: T | undefined, maxLength: number, fieldName = "value", defaultValue?: T): T {
-  return validateStringLength(value, 0, maxLength, fieldName, defaultValue);
+  return assertStringLength(value, 0, maxLength, fieldName, defaultValue);
 }
 
 
-function validateLength<T extends string>(
+function assertLength<T extends string>(
 value: T | undefined, minLength: number, maxLength?: number, fieldName = "value", defaultValue?: T): T {
   if (typeof maxLength === "string") {
     defaultValue = fieldName as T;
@@ -78,12 +78,12 @@ value: T | undefined, minLength: number, maxLength?: number, fieldName = "value"
   if (maxLength === undefined) {
     maxLength = minLength;
   }
-  return validateStringLength(value, minLength, maxLength, fieldName, defaultValue);
+  return assertStringLength(value, minLength, maxLength, fieldName, defaultValue);
 }
 
 
-function validateNonWhitespace<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
-  value = validateNonEmpty(value, fieldName, defaultValue);
+function assertNonWhitespace<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+  value = assertNonEmpty(value, fieldName, defaultValue);
 
   if (value.trimStart().length === 0) {
     throw ono(`Invalid ${fieldName}: ${humanize(value)}. It cannot be all whitespace.`);
@@ -93,7 +93,7 @@ function validateNonWhitespace<T extends string>(value: T | undefined, fieldName
 }
 
 
-function validateStringLength<T extends string>(
+function assertStringLength<T extends string>(
 value: T | undefined, minLength = 1, maxLength = Infinity, fieldName = "value", defaultValue?: T): T {
   value = type.string(value, fieldName, defaultValue);
 

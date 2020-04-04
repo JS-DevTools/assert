@@ -2,50 +2,50 @@
 /* eslint-disable no-new-object, no-new-wrappers */
 "use strict";
 
-const { validate } = require("../../");
+const { assert } = require("../../");
 const { expect } = require("chai");
 
-describe("validate.type.oneOf()", () => {
+describe("assert.type.oneOf()", () => {
 
-  it("should validate special values that are in the list of allowed types", () => {
-    expect(validate.type.oneOf(null, [String, Boolean, null, Number])).to.equal(null);
-    expect(validate.type.oneOf(undefined, [String, Boolean, undefined, Number])).to.equal(undefined);
-    expect(validate.type.oneOf(NaN, [String, Boolean, NaN, Number])).to.satisfy(Number.isNaN);
+  it("should assert special values that are in the list of allowed types", () => {
+    expect(assert.type.oneOf(null, [String, Boolean, null, Number])).to.equal(null);
+    expect(assert.type.oneOf(undefined, [String, Boolean, undefined, Number])).to.equal(undefined);
+    expect(assert.type.oneOf(NaN, [String, Boolean, NaN, Number])).to.satisfy(Number.isNaN);
   });
 
-  it("should validate primitive values that are in the list of allowed types", () => {
-    expect(validate.type.oneOf("Hello, world!", [String, Boolean, null, Number])).to.equal("Hello, world!");
-    expect(validate.type.oneOf(12345, [String, Boolean, undefined, Number])).to.equal(12345);
-    expect(validate.type.oneOf(false, [String, Boolean, NaN, Number])).to.equal(false);
+  it("should assert primitive values that are in the list of allowed types", () => {
+    expect(assert.type.oneOf("Hello, world!", [String, Boolean, null, Number])).to.equal("Hello, world!");
+    expect(assert.type.oneOf(12345, [String, Boolean, undefined, Number])).to.equal(12345);
+    expect(assert.type.oneOf(false, [String, Boolean, NaN, Number])).to.equal(false);
   });
 
-  it("should validate wrapped primitive values that are in the list of allowed types", () => {
-    expect(validate.type.oneOf(new String("Hello, world!"), [String, Boolean, null, Number])).to.deep.equal(new String("Hello, world!"));
-    expect(validate.type.oneOf(new Number(12345), [String, Boolean, undefined, Number])).to.deep.equal(new Number(12345));
-    expect(validate.type.oneOf(new Boolean(false), [String, Boolean, NaN, Number])).to.deep.equal(new Boolean(false));
-    expect(validate.type.oneOf(BigInt(123456789), [String, Boolean, NaN, BigInt])).to.deep.equal(BigInt(123456789));
-    expect(validate.type.oneOf(Symbol("foo"), [String, Boolean, Symbol, Number])).to.be.a("symbol");
+  it("should assert wrapped primitive values that are in the list of allowed types", () => {
+    expect(assert.type.oneOf(new String("Hello, world!"), [String, Boolean, null, Number])).to.deep.equal(new String("Hello, world!"));
+    expect(assert.type.oneOf(new Number(12345), [String, Boolean, undefined, Number])).to.deep.equal(new Number(12345));
+    expect(assert.type.oneOf(new Boolean(false), [String, Boolean, NaN, Number])).to.deep.equal(new Boolean(false));
+    expect(assert.type.oneOf(BigInt(123456789), [String, Boolean, NaN, BigInt])).to.deep.equal(BigInt(123456789));
+    expect(assert.type.oneOf(Symbol("foo"), [String, Boolean, Symbol, Number])).to.be.a("symbol");
   });
 
-  it("should validate values that are instances of allowed types", () => {
-    expect(validate.type.oneOf(/regex/, [String, Boolean, RegExp, Number])).to.be.an.instanceOf(RegExp);
-    expect(validate.type.oneOf(() => undefined, [String, Function, RegExp, Number])).to.be.a("function");
-    expect(validate.type.oneOf(new Date(), [String, Function, RegExp, Date])).to.be.an.instanceOf(Date);
-    expect(validate.type.oneOf(new Map(), [String, Function, Map, Date])).to.be.an.instanceOf(Map);
-    expect(validate.type.oneOf(new Set(), [String, Function, Set, Date])).to.be.an.instanceOf(Set);
-    expect(validate.type.oneOf(Buffer.alloc(0), [String, Buffer, RegExp, Date])).to.be.an.instanceOf(Buffer);
+  it("should assert values that are instances of allowed types", () => {
+    expect(assert.type.oneOf(/regex/, [String, Boolean, RegExp, Number])).to.be.an.instanceOf(RegExp);
+    expect(assert.type.oneOf(() => undefined, [String, Function, RegExp, Number])).to.be.a("function");
+    expect(assert.type.oneOf(new Date(), [String, Function, RegExp, Date])).to.be.an.instanceOf(Date);
+    expect(assert.type.oneOf(new Map(), [String, Function, Map, Date])).to.be.an.instanceOf(Map);
+    expect(assert.type.oneOf(new Set(), [String, Function, Set, Date])).to.be.an.instanceOf(Set);
+    expect(assert.type.oneOf(Buffer.alloc(0), [String, Buffer, RegExp, Date])).to.be.an.instanceOf(Buffer);
   });
 
-  it("should validate default values", () => {
-    expect(validate.type.oneOf(undefined, [Number, BigInt], "count", 12345)).to.equal(12345);
-    expect(validate.type.oneOf(undefined, [Array, Map, Set], "list", [])).to.deep.equal([]);
-    expect(validate.type.oneOf(undefined, [String, RegExp], "pattern", /regex/)).to.deep.equal(/regex/);
+  it("should assert default values", () => {
+    expect(assert.type.oneOf(undefined, [Number, BigInt], "count", 12345)).to.equal(12345);
+    expect(assert.type.oneOf(undefined, [Array, Map, Set], "list", [])).to.deep.equal([]);
+    expect(assert.type.oneOf(undefined, [String, RegExp], "pattern", /regex/)).to.deep.equal(/regex/);
   });
 
   it("should throw an error for special values that are not in the list of allowed types", () => {
     function notAllowed (value, allowed) {
       return () => {
-        validate.type.oneOf(value, allowed, "thing");
+        assert.type.oneOf(value, allowed, "thing");
       };
     }
 
@@ -62,7 +62,7 @@ describe("validate.type.oneOf()", () => {
   it("should throw an error for primitive values that are not in the list of allowed types", () => {
     function notAllowed (value, allowed) {
       return () => {
-        validate.type.oneOf(value, allowed, "thing");
+        assert.type.oneOf(value, allowed, "thing");
       };
     }
 
@@ -82,7 +82,7 @@ describe("validate.type.oneOf()", () => {
   it("should throw an error for wrapped primitive values that are not in the list of allowed types", () => {
     function notAllowed (value, allowed) {
       return () => {
-        validate.type.oneOf(value, allowed, "thing");
+        assert.type.oneOf(value, allowed, "thing");
       };
     }
 
@@ -105,7 +105,7 @@ describe("validate.type.oneOf()", () => {
   it("should throw an error for values that are not in the list of allowed types", () => {
     function notAllowed (value, allowed) {
       return () => {
-        validate.type.oneOf(value, allowed, "thing");
+        assert.type.oneOf(value, allowed, "thing");
       };
     }
 

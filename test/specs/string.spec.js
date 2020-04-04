@@ -1,43 +1,43 @@
 /* eslint-disable no-new-wrappers */
 "use strict";
 
-const { validate } = require("../../");
+const { assert } = require("../../");
 const { expect } = require("chai");
 
-describe("validate.string()", () => {
+describe("assert.string()", () => {
 
-  it("should validate empty strings", () => {
-    expect(validate.string("")).to.equal("");
+  it("should assert empty strings", () => {
+    expect(assert.string("")).to.equal("");
   });
 
-  it("should validate whitespace strings", () => {
-    expect(validate.string(" ")).to.equal(" ");
-    expect(validate.string("\t")).to.equal("\t");
-    expect(validate.string("\n")).to.equal("\n");
-    expect(validate.string("\t \n")).to.equal("\t \n");
+  it("should assert whitespace strings", () => {
+    expect(assert.string(" ")).to.equal(" ");
+    expect(assert.string("\t")).to.equal("\t");
+    expect(assert.string("\n")).to.equal("\n");
+    expect(assert.string("\t \n")).to.equal("\t \n");
   });
 
-  it("should validate text strings", () => {
-    expect(validate.string("Hello, world")).to.equal("Hello, world");
+  it("should assert text strings", () => {
+    expect(assert.string("Hello, world")).to.equal("Hello, world");
   });
 
-  it("should validate numeric strings", () => {
-    expect(validate.string("0")).to.equal("0");
-    expect(validate.string("123")).to.equal("123");
-    expect(validate.string("Infinity")).to.equal("Infinity");
+  it("should assert numeric strings", () => {
+    expect(assert.string("0")).to.equal("0");
+    expect(assert.string("123")).to.equal("123");
+    expect(assert.string("Infinity")).to.equal("Infinity");
   });
 
-  it("should validate default values", () => {
-    expect(validate.string(undefined, "name", "")).to.equal("");
-    expect(validate.string(undefined, "name", "\t \n")).to.equal("\t \n");
-    expect(validate.string(undefined, "name", "Hello, world")).to.equal("Hello, world");
-    expect(validate.string(undefined, "name", "123")).to.equal("123");
+  it("should assert default values", () => {
+    expect(assert.string(undefined, "name", "")).to.equal("");
+    expect(assert.string(undefined, "name", "\t \n")).to.equal("\t \n");
+    expect(assert.string(undefined, "name", "Hello, world")).to.equal("Hello, world");
+    expect(assert.string(undefined, "name", "123")).to.equal("123");
   });
 
   it("should throw an error for invalid values", () => {
     function invalid (value) {
       return () => {
-        validate.string(value);
+        assert.string(value);
       };
     }
 
@@ -56,7 +56,7 @@ describe("validate.string()", () => {
   it("should throw an error for invalid defaults", () => {
     function invalidDefault (defaultValue) {
       return () => {
-        validate.string(undefined, "name", defaultValue);
+        assert.string(undefined, "name", defaultValue);
       };
     }
 

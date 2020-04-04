@@ -1,29 +1,29 @@
 "use strict";
 
-const { validate } = require("../../lib");
+const { assert } = require("../../lib");
 const { expect } = require("chai");
 
-describe("validate.number.integer.nonNegative()", () => {
+describe("assert.number.integer.nonNegative()", () => {
 
-  it("should validate zero", () => {
-    expect(validate.number.integer.nonNegative(0)).to.equal(0);
-    expect(validate.number.integer.nonNegative(0.0)).to.equal(0);
+  it("should assert zero", () => {
+    expect(assert.number.integer.nonNegative(0)).to.equal(0);
+    expect(assert.number.integer.nonNegative(0.0)).to.equal(0);
   });
 
-  it("should validate non-negative integers", () => {
-    expect(validate.number.integer.nonNegative(0)).to.equal(0);
-    expect(validate.number.integer.nonNegative(0.0)).to.equal(0);
-    expect(validate.number.integer.nonNegative(1.0)).to.equal(1);
-    expect(validate.number.integer.nonNegative(42)).to.equal(42);
-    expect(validate.number.integer.nonNegative(100)).to.equal(100);
-    expect(validate.number.integer.nonNegative(Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
-    expect(validate.number.integer.nonNegative(Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
+  it("should assert non-negative integers", () => {
+    expect(assert.number.integer.nonNegative(0)).to.equal(0);
+    expect(assert.number.integer.nonNegative(0.0)).to.equal(0);
+    expect(assert.number.integer.nonNegative(1.0)).to.equal(1);
+    expect(assert.number.integer.nonNegative(42)).to.equal(42);
+    expect(assert.number.integer.nonNegative(100)).to.equal(100);
+    expect(assert.number.integer.nonNegative(Number.MAX_VALUE)).to.equal(Number.MAX_VALUE);
+    expect(assert.number.integer.nonNegative(Number.MAX_SAFE_INTEGER)).to.equal(Number.MAX_SAFE_INTEGER);
   });
 
   it("should throw an error for negative numbers", () => {
     function negative (value) {
       return () => {
-        validate.number.integer.nonNegative(value);
+        assert.number.integer.nonNegative(value);
       };
     }
 
@@ -34,7 +34,7 @@ describe("validate.number.integer.nonNegative()", () => {
   it("should throw an error for invalid defaults", () => {
     function negative (defaultValue) {
       return () => {
-        validate.number.integer.nonNegative(undefined, "age", defaultValue);
+        assert.number.integer.nonNegative(undefined, "age", defaultValue);
       };
     }
 

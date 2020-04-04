@@ -3,29 +3,29 @@ import { humanize } from "@jsdevtools/humanize-anything";
 import { ono } from "@jsdevtools/ono";
 
 /**
- * Validates any value that is not `undefined` (even `null` and `NaN`).
+ * Asserts that value is not `undefined` (even `null` and `NaN`).
  */
-export interface ValidateValue {
+export interface AssertValue {
   /**
-   * Validates any value that is not `undefined` (even `null` and `NaN`).
+   * Asserts that a value is not `undefined` (even `null` and `NaN`).
    */
   <T>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
 
   /**
-   * Validates a value that is one of the specified values.
+   * Asserts that a value is one of the specified values.
    */
   oneOf<T>(value: T | undefined, values: T[], fieldName?: string, defaultValue?: T): T;
 }
 
 
 /**
- * Validates any value that is not `undefined` (even `null` and `NaN`).
+ * Asserts that a value is not `undefined` (even `null` and `NaN`).
  */
-export const value = validateHasValue as ValidateValue;
-value.oneOf = validateOneOf;
+export const value = assertHasValue as AssertValue;
+value.oneOf = assertOneOf;
 
 
-function validateHasValue<T>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertHasValue<T>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
   if (value === undefined) {
     value = defaultValue;
   }
@@ -38,8 +38,8 @@ function validateHasValue<T>(value: T | undefined, fieldName = "value", defaultV
 }
 
 
-function validateOneOf<T>(value: T | undefined, values: T[], fieldName = "value", defaultValue?: T): T {
-  value = validateHasValue(value, fieldName, defaultValue);
+function assertOneOf<T>(value: T | undefined, values: T[], fieldName = "value", defaultValue?: T): T {
+  value = assertHasValue(value, fieldName, defaultValue);
 
   if (!values.includes(value)) {
     throw ono.type(

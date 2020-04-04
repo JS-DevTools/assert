@@ -1,8 +1,10 @@
 {
-  "name": "@jsdevtools/validate",
-  "version": "1.0.3",
-  "description": "Simple validation helpers with user-friendly error messages",
+  "name": "@jsdevtools/assert",
+  "version": "0.0.1",
+  "description": "An assertion library with user-friendly error messages",
   "keywords": [
+    "assert",
+    "assertions",
     "validate",
     "validation",
     "input validation"
@@ -12,10 +14,10 @@
     "url": "https://jamesmessinger.com"
   },
   "license": "MIT",
-  "homepage": "https://jstools.dev/validate",
+  "homepage": "https://jstools.dev/assert",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JS-DevTools/validate.git"
+    "url": "https://github.com/JS-DevTools/assert.git"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

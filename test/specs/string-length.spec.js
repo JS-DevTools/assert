@@ -1,36 +1,36 @@
 "use strict";
 
-const { validate } = require("../../lib");
+const { assert } = require("../../lib");
 const { expect } = require("chai");
 
-describe("validate.string.length()", () => {
+describe("assert.string.length()", () => {
 
-  it("should validate strings that meet the minimum and maximum", () => {
-    expect(validate.string.length("a", 0, 1)).to.equal("a");
-    expect(validate.string.length("Hello, world!", 10, 50)).to.equal("Hello, world!");
-    expect(validate.string.length("hello", 5, 10)).to.equal("hello");
+  it("should assert strings that meet the minimum and maximum", () => {
+    expect(assert.string.length("a", 0, 1)).to.equal("a");
+    expect(assert.string.length("Hello, world!", 10, 50)).to.equal("Hello, world!");
+    expect(assert.string.length("hello", 5, 10)).to.equal("hello");
   });
 
-  it("should validate strings that meet the exact length", () => {
-    expect(validate.string.length("a", 1)).to.equal("a");
-    expect(validate.string.length("Hello, world!", 13)).to.equal("Hello, world!");
-    expect(validate.string.length("hello", 5)).to.equal("hello");
+  it("should assert strings that meet the exact length", () => {
+    expect(assert.string.length("a", 1)).to.equal("a");
+    expect(assert.string.length("Hello, world!", 13)).to.equal("Hello, world!");
+    expect(assert.string.length("hello", 5)).to.equal("hello");
   });
 
-  it("should validate default values", () => {
-    expect(validate.string.length(undefined, 0, 1, "name", "A")).to.equal("A");
-    expect(validate.string.length(undefined, 10, 50, "name", "Hello, world!")).to.equal("Hello, world!");
-    expect(validate.string.length(undefined, 5, 10, "name", "hello")).to.equal("hello");
+  it("should assert default values", () => {
+    expect(assert.string.length(undefined, 0, 1, "name", "A")).to.equal("A");
+    expect(assert.string.length(undefined, 10, 50, "name", "Hello, world!")).to.equal("Hello, world!");
+    expect(assert.string.length(undefined, 5, 10, "name", "hello")).to.equal("hello");
 
-    expect(validate.string.length(undefined, 1, "name", "A")).to.equal("A");
-    expect(validate.string.length(undefined, 13, "name", "Hello, world!")).to.equal("Hello, world!");
-    expect(validate.string.length(undefined, 5, "name", "hello")).to.equal("hello");
+    expect(assert.string.length(undefined, 1, "name", "A")).to.equal("A");
+    expect(assert.string.length(undefined, 13, "name", "Hello, world!")).to.equal("Hello, world!");
+    expect(assert.string.length(undefined, 5, "name", "hello")).to.equal("hello");
   });
 
   it("should throw an error for strings that don't meet the minimum and maximum", () => {
     function tooLong (value, min, max) {
       return () => {
-        validate.string.length(value, min, max);
+        assert.string.length(value, min, max);
       };
     }
 
@@ -42,7 +42,7 @@ describe("validate.string.length()", () => {
   it("should throw an error for strings that don't meet the exact length", () => {
     function tooLong (value, length) {
       return () => {
-        validate.string.length(value, length);
+        assert.string.length(value, length);
       };
     }
 
@@ -54,7 +54,7 @@ describe("validate.string.length()", () => {
   it("should throw an error for defaults that don't meet the maximum", () => {
     function invalidDefault (defaultValue, min, max) {
       return () => {
-        validate.string.length(undefined, min, max, "name", defaultValue);
+        assert.string.length(undefined, min, max, "name", defaultValue);
       };
     }
 
@@ -66,7 +66,7 @@ describe("validate.string.length()", () => {
   it("should throw an error for defaults that don't meet the exact length", () => {
     function invalidDefault (defaultValue, length) {
       return () => {
-        validate.string.length(undefined, length, "name", defaultValue);
+        assert.string.length(undefined, length, "name", defaultValue);
       };
     }
 

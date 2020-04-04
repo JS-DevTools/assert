@@ -1,25 +1,25 @@
 /* eslint-disable no-new-wrappers */
 "use strict";
 
-const { validate } = require("../../");
+const { assert } = require("../../");
 const { expect } = require("chai");
 
-describe("validate.type.boolean()", () => {
+describe("assert.type.boolean()", () => {
 
-  it("should validate boolean values", () => {
-    expect(validate.type.boolean(false)).to.equal(false);
-    expect(validate.type.boolean(true)).to.equal(true);
+  it("should assert boolean values", () => {
+    expect(assert.type.boolean(false)).to.equal(false);
+    expect(assert.type.boolean(true)).to.equal(true);
   });
 
-  it("should validate default values", () => {
-    expect(validate.type.boolean(undefined, "enabled", false)).to.equal(false);
-    expect(validate.type.boolean(undefined, "enabled", true)).to.equal(true);
+  it("should assert default values", () => {
+    expect(assert.type.boolean(undefined, "enabled", false)).to.equal(false);
+    expect(assert.type.boolean(undefined, "enabled", true)).to.equal(true);
   });
 
   it("should throw an error for invalid values", () => {
     function invalid (value) {
       return () => {
-        validate.type.boolean(value);
+        assert.type.boolean(value);
       };
     }
 
@@ -37,7 +37,7 @@ describe("validate.type.boolean()", () => {
   it("should throw an error for invalid defaults", () => {
     function invalidDefault (defaultValue) {
       return () => {
-        validate.type.boolean(undefined, "thing", defaultValue);
+        assert.type.boolean(undefined, "thing", defaultValue);
       };
     }
 

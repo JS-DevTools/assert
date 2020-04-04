@@ -1,24 +1,24 @@
-Validate
+Assert
 ======================================
-### Simple validation helpers with user-friendly error messages
+### An assertion library with user-friendly error messages
 
-[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/validate/blob/master/.github/workflows/CI-CD.yaml)
-[![Build Status](https://github.com/JS-DevTools/validate/workflows/CI-CD/badge.svg)](https://github.com/JS-DevTools/validate/blob/master/.github/workflows/CI-CD.yaml)
+[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/assert/blob/master/.github/workflows/CI-CD.yaml)
+[![Build Status](https://github.com/JS-DevTools/assert/workflows/CI-CD/badge.svg)](https://github.com/JS-DevTools/assert/blob/master/.github/workflows/CI-CD.yaml)
 
-[![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/validate/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/validate)
-[![Dependencies](https://david-dm.org/JS-DevTools/validate.svg)](https://david-dm.org/JS-DevTools/validate)
+[![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/assert/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/assert)
+[![Dependencies](https://david-dm.org/JS-DevTools/assert.svg)](https://david-dm.org/JS-DevTools/assert)
 
-[![npm](https://img.shields.io/npm/v/@jsdevtools/validate.svg)](https://www.npmjs.com/package/@jsdevtools/validate)
-[![License](https://img.shields.io/npm/l/@jsdevtools/validate.svg)](LICENSE)
-[![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/JS-DevTools/validate)
+[![npm](https://img.shields.io/npm/v/@jsdevtools/assert.svg)](https://www.npmjs.com/package/@jsdevtools/assert)
+[![License](https://img.shields.io/npm/l/@jsdevtools/assert.svg)](LICENSE)
+[![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/JS-DevTools/assert)
 
 
 
 Features
 --------------------------
-- When validation succeeds, the value is returned. Useful for assertion + assignment.
+- When an assertion succeeds, the value is returned. Useful for assertion + assignment.
 
-- When validation fails, the appropriate error type is thrown (e.g. `TypeError`, `RangeError`, etc.)
+- Throws appropriate error types for each assertion (e.g. `TypeError`, `RangeError`, etc.)
 
 - Error messages include the invalid value, humanized and sanitized
 
@@ -31,393 +31,393 @@ Installation
 You can install this library via [npm](https://docs.npmjs.com/about-npm/).
 
 ```bash
-npm install @jsdevtools/validate
+npm install @jsdevtools/assert
 ```
 
 
 
 Usage
 -------------------------------
-The exported `validate` object is a fluent-like object with various validation functions.  Each of the validation functions returns the value if valid, or throws an error if invalid.
+The exported `assert` function supports fluent-like chaining with various assertion functions.  Each of the assertion functions returns the value if valid, or throws an error if invalid.
 
 
-### `validate.value(value, [fieldName], [defaultValue])`
-Validates any value that is not `undefined`. (even `null` and `NaN`)
+### `assert.value(value, [fieldName], [defaultValue])`
+Asserts that a value that is not `undefined`. Any other value will pass, even `null` and `NaN`.
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.value(0);                    // ✔
-validate.value(false);                // ✔
-validate.value(null);                 // ✔
-validate.value(NaN);                  // ✔
+assert.value(0);                    // ✔
+assert.value(false);                // ✔
+assert.value(null);                 // ✔
+assert.value(NaN);                  // ✔
 
-validate.value(undefined);            // ❌ Invalid value: undefined. A value is required.
+assert.value(undefined);            // ❌ Invalid value: undefined. A value is required.
 ```
 
 
-### `validate.value.oneOf(value, values, [fieldName], [defaultValue])`
-Validates a value that is one of the specified values.
+### `assert.value.oneOf(value, values, [fieldName], [defaultValue])`
+Assets that a value that is one of the specified values.
 
-- **value** - The value to validate
+- **value** - The value to check
 - **values** - The allowed values
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.value.oneOf("a", ["a", "b", "c"]);     // ✔
-validate.value.oneOf(4, [1, 2, 3, 4, 5]);       // ✔
-validate.value.oneOf(true, [1, true, "yes"]);   // ✔
+assert.value.oneOf("a", ["a", "b", "c"]);     // ✔
+assert.value.oneOf(4, [1, 2, 3, 4, 5]);       // ✔
+assert.value.oneOf(true, [1, true, "yes"]);   // ✔
 
-validate.value.oneOf("b", ["x", "y", "z"]);     // ❌ Invalid value: "b". Expected "x", "y", or "z".
+assert.value.oneOf("b", ["x", "y", "z"]);     // ❌ Invalid value: "b". Expected "x", "y", or "z".
 ```
 
 
-### `validate.type(value, type, [fieldName], [defaultValue])`
-Validates a value that is the specified type.
+### `assert.type(value, type, [fieldName], [defaultValue])`
+Asserts that a value is the specified type.
 
-- **value** - The value to validate
+- **value** - The value to check
 - **type** - The expected type. This can be a class, a primitive wrapper (e.g. `String`), `null`, or `undefined`
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.type("John", String);          // ✔
-validate.type(42, Number);              // ✔
-validate.type(false, Boolean);          // ✔
-validate.type(null, null);              // ✔
-validate.type({ x: 1 }, Object);        // ✔
-validate.type(/^regex$/, RegExp);       // ✔
-validate.type(new Date(), Date);        // ✔
+assert.type("John", String);          // ✔
+assert.type(42, Number);              // ✔
+assert.type(false, Boolean);          // ✔
+assert.type(null, null);              // ✔
+assert.type({ x: 1 }, Object);        // ✔
+assert.type(/^regex$/, RegExp);       // ✔
+assert.type(new Date(), Date);        // ✔
 
-validate.type("Fred", Object);          // ❌ Invalid value: "Fred". Expected an Object.
-validate.type(100, BigInt);             // ❌ Invalid value: 100. Expected a bigint.
-validate.type(undefined, null);         // ❌ Invalid value: undefined. Expected null.
-validate.type(null, Object);            // ❌ Invalid value: null. Expected an Object.
-validate.type(new Date(), RangeError);  // ❌ Invalid value: Date. Expected a RangeError.
+assert.type("Fred", Object);          // ❌ Invalid value: "Fred". Expected an Object.
+assert.type(100, BigInt);             // ❌ Invalid value: 100. Expected a bigint.
+assert.type(undefined, null);         // ❌ Invalid value: undefined. Expected null.
+assert.type(null, Object);            // ❌ Invalid value: null. Expected an Object.
+assert.type(new Date(), RangeError);  // ❌ Invalid value: Date. Expected a RangeError.
 ```
 
 
-### `validate.type.oneOf(value, types, [fieldName], [defaultValue])`
-Validates a value that is the specified type.
+### `assert.type.oneOf(value, types, [fieldName], [defaultValue])`
+Asserts that a value is one of the specified types.
 
-- **value** - The value to validate
+- **value** - The value to check
 - **types** - An array of the allowed types.
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.type.oneOf("John", [Number, String, Boolean]);           // ✔
-validate.type.oneOf(42, [Number, BigInt, Date]);                  // ✔
-validate.type.oneOf(null, [null, undefined]);                     // ✔
-validate.type.oneOf(new RangeError(), [TypeError, RangeError]);   // ✔
+assert.type.oneOf("John", [Number, String, Boolean]);           // ✔
+assert.type.oneOf(42, [Number, BigInt, Date]);                  // ✔
+assert.type.oneOf(null, [null, undefined]);                     // ✔
+assert.type.oneOf(new RangeError(), [TypeError, RangeError]);   // ✔
 
-validate.type.oneOf("Fred", [Number, Boolean, Object]);           // ❌ Invalid value: "Fred". Expected a number, boolean, or Object.
-validate.type.oneOf(undefined, [Boolean, Number, null]);          // ❌ Invalid value: undefined. Expected a boolean, number, or null.
-validate.type.oneOf(new SyntaxError(), [TypeError, RangeError]);  // ❌ Invalid value: SyntaxError. Expected a TypeError or RangeError.
+assert.type.oneOf("Fred", [Number, Boolean, Object]);           // ❌ Invalid value: "Fred". Expected a number, boolean, or Object.
+assert.type.oneOf(undefined, [Boolean, Number, null]);          // ❌ Invalid value: undefined. Expected a boolean, number, or null.
+assert.type.oneOf(new SyntaxError(), [TypeError, RangeError]);  // ❌ Invalid value: SyntaxError. Expected a TypeError or RangeError.
 ```
 
 
-### `validate.type.string(value, [fieldName], [defaultValue])`
-Validates a primitive string value (including empty strings).
+### `assert.type.string(value, [fieldName], [defaultValue])`
+Asserts that a value is a primitive string (including empty strings).
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.type.string("John");                      // ✔
-validate.type.string("");                          // ✔
-validate.type.string("           ");               // ✔
-validate.type.string("\n");                        // ✔
-validate.type.string("\t");                        // ✔
+assert.type.string("John");                      // ✔
+assert.type.string("");                          // ✔
+assert.type.string("           ");               // ✔
+assert.type.string("\n");                        // ✔
+assert.type.string("\t");                        // ✔
 
-validate.type.string(123);                         // ❌ Invalid value: 123. Expected a string.
-validate.type.string(null);                        // ❌ Invalid value: null. Expected a string.
-validate.type.string(new String());                // ❌ Invalid value: String. Expected a string.
+assert.type.string(123);                         // ❌ Invalid value: 123. Expected a string.
+assert.type.string(null);                        // ❌ Invalid value: null. Expected a string.
+assert.type.string(new String());                // ❌ Invalid value: String. Expected a string.
 ```
 
 
-### `validate.type.number(value, [fieldName], [defaultValue])`
-Validates a primitive number value (**not** including `NaN`).
+### `assert.type.number(value, [fieldName], [defaultValue])`
+Asserts that a value is a primitive number. `NaN` is **not** considered a number.
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.type.number(0)                     // ✔
-validate.type.number(123)                   // ✔
-validate.type.number(-42.1245)              // ✔
-validate.type.number(Math.PI)               // ✔
-validate.type.number(Infinity)              // ✔
+assert.type.number(0)                     // ✔
+assert.type.number(123)                   // ✔
+assert.type.number(-42.1245)              // ✔
+assert.type.number(Math.PI)               // ✔
+assert.type.number(Infinity)              // ✔
 
-validate.type.number("123");                // ❌ Invalid value: "123". Expected a number.
-validate.type.number(NaN);                  // ❌ Invalid value: NaN. Expected a number.
-validate.type.number(new Number());         // ❌ Invalid value: Number. Expected a number.
+assert.type.number("123");                // ❌ Invalid value: "123". Expected a number.
+assert.type.number(NaN);                  // ❌ Invalid value: NaN. Expected a number.
+assert.type.number(new Number());         // ❌ Invalid value: Number. Expected a number.
 ```
 
 
-### `validate.type.boolean(value, [fieldName], [defaultValue])`
-Validates a primitive boolean value.
+### `assert.type.boolean(value, [fieldName], [defaultValue])`
+Asserts that a value is a primitive boolean value.
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.type.boolean(false)                 // ✔
-validate.type.boolean(true)                  // ✔
+assert.type.boolean(false)                 // ✔
+assert.type.boolean(true)                  // ✔
 
-validate.type.boolean("true");               // ❌ Invalid value: "true". Expected a boolean.
-validate.type.boolean(0);                    // ❌ Invalid value: 0. Expected a boolean.
-validate.type.boolean(1);                    // ❌ Invalid value: 1. Expected a boolean.
-validate.type.boolean(new Boolean());        // ❌ Invalid value: Boolean. Expected a boolean.
+assert.type.boolean("true");               // ❌ Invalid value: "true". Expected a boolean.
+assert.type.boolean(0);                    // ❌ Invalid value: 0. Expected a boolean.
+assert.type.boolean(1);                    // ❌ Invalid value: 1. Expected a boolean.
+assert.type.boolean(new Boolean());        // ❌ Invalid value: Boolean. Expected a boolean.
 ```
 
 
-### `validate.type.object(value, [fieldName], [defaultValue])`
-Validates an object (**not** including `null`).
+### `assert.type.object(value, [fieldName], [defaultValue])`
+Asserts that a value is an object `null` is **not** considered an object.
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.type.object({})                 // ✔
-validate.type.object(/^regex$/)          // ✔
-validate.type.object(new Date())         // ✔
-validate.type.object(new Object())       // ✔
-validate.type.object(Object.prototype)   // ✔
+assert.type.object({})                 // ✔
+assert.type.object(/^regex$/)          // ✔
+assert.type.object(new Date())         // ✔
+assert.type.object(new Object())       // ✔
+assert.type.object(Object.prototype)   // ✔
 
-validate.type.object(null);              // ❌ Invalid value: null. Expected an object.
-validate.type.object(undefined);         // ❌ Invalid value: undefined. A value is required.
-validate.type.object(Object);            // ❌ Invalid value: function. Expected an object.
+assert.type.object(null);              // ❌ Invalid value: null. Expected an object.
+assert.type.object(undefined);         // ❌ Invalid value: undefined. A value is required.
+assert.type.object(Object);            // ❌ Invalid value: function. Expected an object.
 ```
 
 
-### `validate.type.function(value, [fieldName], [defaultValue])`
-Validates any type of function, including async, generators, arrow functions, classes, etc.
+### `assert.type.function(value, [fieldName], [defaultValue])`
+Asserts  any type of function, including async, generators, arrow functions, classes, etc.
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.type.function(Object)                   // ✔
-validate.type.function(Object.toString)          // ✔
-validate.type.function(function foo() {})        // ✔
-validate.type.function(() => null)               // ✔
-validate.type.function(class Foo {})             // ✔
+assert.type.function(Object)                   // ✔
+assert.type.function(Object.toString)          // ✔
+assert.type.function(function foo() {})        // ✔
+assert.type.function(() => null)               // ✔
+assert.type.function(class Foo {})             // ✔
 
-validate.type.function(null);                    // ❌ Invalid value: null. Expected a function.
-validate.type.function(new Object());            // ❌ Invalid value: {}. Expected a function.
-validate.type.function("function");              // ❌ Invalid value: "function". Expected a function.
+assert.type.function(null);                    // ❌ Invalid value: null. Expected a function.
+assert.type.function(new Object());            // ❌ Invalid value: {}. Expected a function.
+assert.type.function("function");              // ❌ Invalid value: "function". Expected a function.
 ```
 
 
-### `validate.string(value, [fieldName], [defaultValue])`
-This is an alias for [`validate.type.string()`](#validate-string-value-fieldname-defaultvalue)
+### `assert.string(value, [fieldName], [defaultValue])`
+This is an alias for [`assert.type.string()`](#assert-string-value-fieldname-defaultvalue)
 
 
-### `validate.string.nonEmpty(value, [fieldName], [defaultValue])`
-Validates a string with at least one character (including whitespace).
+### `assert.string.nonEmpty(value, [fieldName], [defaultValue])`
+Asserts that a value is a string with at least one character (including whitespace).
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.string.nonEmpty("John")                   // ✔
-validate.string.nonEmpty("    ")                   // ✔
-validate.string.nonEmpty("\n")                     // ✔
-validate.string.nonEmpty("\t")                     // ✔
+assert.string.nonEmpty("John")                   // ✔
+assert.string.nonEmpty("    ")                   // ✔
+assert.string.nonEmpty("\n")                     // ✔
+assert.string.nonEmpty("\t")                     // ✔
 
-validate.string.nonEmpty("");                      // ❌ Invalid value: "". It cannot be empty.
-validate.string.nonEmpty(null);                    // ❌ Invalid value: null. Expected a string.
-validate.string.nonEmpty(new String());            // ❌ Invalid value: String. Expected a string.
+assert.string.nonEmpty("");                      // ❌ Invalid value: "". It cannot be empty.
+assert.string.nonEmpty(null);                    // ❌ Invalid value: null. Expected a string.
+assert.string.nonEmpty(new String());            // ❌ Invalid value: String. Expected a string.
 ```
 
 
-### `validate.string.nonWhitespace(value, [fieldName], [defaultValue])`
-Validates a string with at least one non-whitespace character.
+### `assert.string.nonWhitespace(value, [fieldName], [defaultValue])`
+Asserts that a value is a string with at least one non-whitespace character.
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.string.nonWhitespace("John")                   // ✔
-validate.string.nonWhitespace("  a  ")                  // ✔
+assert.string.nonWhitespace("John")                   // ✔
+assert.string.nonWhitespace("  a  ")                  // ✔
 
-validate.string.nonWhitespace("");                      // ❌ Invalid value: "". It cannot be empty.
-validate.string.nonWhitespace("    ");                  // ❌ Invalid value: "    ". It cannot be all whitespace.
-validate.string.nonWhitespace("\n")                     // ❌ Invalid value: "\n". It cannot be all whitespace.
-validate.string.nonWhitespace("\t")                     // ❌ Invalid value: "\t". It cannot be all whitespace.
-validate.string.nonWhitespace(new String());            // ❌ Invalid value: String. Expected a string.
+assert.string.nonWhitespace("");                      // ❌ Invalid value: "". It cannot be empty.
+assert.string.nonWhitespace("    ");                  // ❌ Invalid value: "    ". It cannot be all whitespace.
+assert.string.nonWhitespace("\n")                     // ❌ Invalid value: "\n". It cannot be all whitespace.
+assert.string.nonWhitespace("\t")                     // ❌ Invalid value: "\t". It cannot be all whitespace.
+assert.string.nonWhitespace(new String());            // ❌ Invalid value: String. Expected a string.
 ```
 
 
-### `validate.string.minLength(value, minLength, [fieldName], [defaultValue])`
-Validates a string with at least the specified number of characters (including whitespace).
+### `assert.string.minLength(value, minLength, [fieldName], [defaultValue])`
+Asserts that a value is a string with at least the specified number of characters (including whitespace).
 
-- **value** - The value to validate
+- **value** - The value to check
 - **minLength** - The minimum allowed length
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.string.minLength("John", 1)                // ✔
-validate.string.minLength("  a  ", 5)               // ✔
-validate.string.minLength("", 0)                    // ✔
+assert.string.minLength("John", 1)                // ✔
+assert.string.minLength("  a  ", 5)               // ✔
+assert.string.minLength("", 0)                    // ✔
 
-validate.string.minLength("", 1);                   // ❌ Invalid value: "". It cannot be empty.
-validate.string.minLength("John", 10);              // ❌ Invalid value: "John". It should be at least 10 characters.
+assert.string.minLength("", 1);                   // ❌ Invalid value: "". It cannot be empty.
+assert.string.minLength("John", 10);              // ❌ Invalid value: "John". It should be at least 10 characters.
 ```
 
 
-### `validate.string.maxLength(value, maxLength, [fieldName], [defaultValue])`
-Validates a string with no more than the specified number of characters (including whitespace).
+### `assert.string.maxLength(value, maxLength, [fieldName], [defaultValue])`
+Asserts that a value is a string with no more than the specified number of characters (including whitespace).
 
-- **value** - The value to validate
+- **value** - The value to check
 - **maxLength** - The maximum allowed length
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.string.maxLength("John", 10)               // ✔
-validate.string.maxLength("  a  ", 5)               // ✔
-validate.string.maxLength("", 50)                   // ✔
+assert.string.maxLength("John", 10)               // ✔
+assert.string.maxLength("  a  ", 5)               // ✔
+assert.string.maxLength("", 50)                   // ✔
 
-validate.string.maxLength("John Doe", 5);           // ❌ Invalid value: "John Doe". It cannot be more than 5 characters.
+assert.string.maxLength("John Doe", 5);           // ❌ Invalid value: "John Doe". It cannot be more than 5 characters.
 ```
 
 
-### `validate.string.length(value, minLength, [maxLength], [fieldName], [defaultValue])`
-Validates a string with the specified number of characters (including whitespace)
+### `assert.string.length(value, minLength, [maxLength], [fieldName], [defaultValue])`
+Asserts that a value is a string with the specified number of characters (including whitespace)
 
-- **value** - The value to validate
+- **value** - The value to check
 - **minLength** - The minimum allowed length
 - **maxLength** - (optional) The maximum allowed length. If not specified, it defaults to the same as `minLength`.
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.string.length("John", 1, 10)            // ✔
-validate.string.length("  a  ", 5, 25)           // ✔
-validate.string.length("", 0, 100)               // ✔
+assert.string.length("John", 1, 10)            // ✔
+assert.string.length("  a  ", 5, 25)           // ✔
+assert.string.length("", 0, 100)               // ✔
 
-validate.string.length("John Doe", 1, 5);        // ❌ Invalid value: "John Doe". It cannot be more than 5 characters.
-validate.string.length("John Doe", 20, 50);      // ❌ Invalid value: "John Doe". It should be at least 20 characters.
-validate.string.length("John Doe", 5);           // ❌ Invalid value: "John Doe". It must be exactly 5 characters.
+assert.string.length("John Doe", 1, 5);        // ❌ Invalid value: "John Doe". It cannot be more than 5 characters.
+assert.string.length("John Doe", 20, 50);      // ❌ Invalid value: "John Doe". It should be at least 20 characters.
+assert.string.length("John Doe", 5);           // ❌ Invalid value: "John Doe". It must be exactly 5 characters.
 ```
 
 
-### `validate.number(value, [fieldName], [defaultValue])`
-This is an alias for [`validate.type.number()`](#validate-number-value-fieldname-defaultvalue)
+### `assert.number(value, [fieldName], [defaultValue])`
+This is an alias for [`assert.type.number()`](#assert-number-value-fieldname-defaultvalue)
 
 
-### `validate.number.integer(value, [fieldName], [defaultValue])`
-Validates an integer value (positive or negative).
+### `assert.number.integer(value, [fieldName], [defaultValue])`
+Asserts that a value is an integer value (positive or negative).
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.number.integer(0);               // ✔
-validate.number.integer(42);              // ✔
-validate.number.integer(-42);             // ✔
-validate.number.integer(12345.0);         // ✔
+assert.number.integer(0);               // ✔
+assert.number.integer(42);              // ✔
+assert.number.integer(-42);             // ✔
+assert.number.integer(12345.0);         // ✔
 
-validate.number.integer(Math.PI);         // ❌ Invalid value: 3.141592653589793. Expected an integer.
-validate.number.integer(Infinity);        // ❌ Invalid value: Infinity. Expected an integer.
-validate.number.integer(NaN);             // ❌ Invalid value: NaN. Expected a number.
+assert.number.integer(Math.PI);         // ❌ Invalid value: 3.141592653589793. Expected an integer.
+assert.number.integer(Infinity);        // ❌ Invalid value: Infinity. Expected an integer.
+assert.number.integer(NaN);             // ❌ Invalid value: NaN. Expected a number.
 ```
 
 
-### `validate.number.integer.positive(value, [fieldName], [defaultValue])`
-Validates a positive integer value (one or more).
+### `assert.number.integer.positive(value, [fieldName], [defaultValue])`
+Asserts that a value is a positive integer value (one or more).
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.number.integer.positive(42);              // ✔
-validate.number.integer.positive(12345.0);         // ✔
+assert.number.integer.positive(42);              // ✔
+assert.number.integer.positive(12345.0);         // ✔
 
-validate.number.integer.positive(0);               // ❌ Invalid value: 0. Expected a positive integer.
-validate.number.integer.positive(-42);             // ❌ Invalid value: -42. Expected a positive integer.
-validate.number.integer.positive(Infinity);        // ❌ Invalid value: Infinity. Expected an integer.
-validate.number.integer.positive(NaN);             // ❌ Invalid value: NaN. Expected a number.
+assert.number.integer.positive(0);               // ❌ Invalid value: 0. Expected a positive integer.
+assert.number.integer.positive(-42);             // ❌ Invalid value: -42. Expected a positive integer.
+assert.number.integer.positive(Infinity);        // ❌ Invalid value: Infinity. Expected an integer.
+assert.number.integer.positive(NaN);             // ❌ Invalid value: NaN. Expected a number.
 ```
 
 
-### `validate.number.integer.nonNegative(value, [fieldName], [defaultValue])`
-Validates an integer value that is zero or greater.
+### `assert.number.integer.nonNegative(value, [fieldName], [defaultValue])`
+Asserts that a value is an integer value that is zero or greater.
 
-- **value** - The value to validate
-- **fieldName** - (optional) The name of the field being validated. This is used in the error message if invalid.
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
 - **defaultValue** - (optional) The default value to use if `value` is `undefined`.
 
 ```javascript
-import validate from "@jsdevtools/validate";
+import assert from "@jsdevtools/assert";
 
-validate.number.integer.nonNegative(0);               // ✔
-validate.number.integer.nonNegative(42);              // ✔
-validate.number.integer.nonNegative(12345.0);         // ✔
+assert.number.integer.nonNegative(0);               // ✔
+assert.number.integer.nonNegative(42);              // ✔
+assert.number.integer.nonNegative(12345.0);         // ✔
 
-validate.number.integer.nonNegative(-42);             // ❌ Invalid value: -42. Expected zero or greater.
-validate.number.integer.nonNegative(-Infinity);       // ❌ Invalid value: -Infinity. Expected an integer.
-validate.number.integer.nonNegative(NaN);             // ❌ Invalid value: NaN. Expected a number.
+assert.number.integer.nonNegative(-42);             // ❌ Invalid value: -42. Expected zero or greater.
+assert.number.integer.nonNegative(-Infinity);       // ❌ Invalid value: -Infinity. Expected an integer.
+assert.number.integer.nonNegative(NaN);             // ❌ Invalid value: NaN. Expected a number.
 ```
 
 
 
 Contributing
 --------------------------
-Contributions, enhancements, and bug-fixes are welcome!  [File an issue](https://github.com/JS-DevTools/validate/issues) on GitHub and [submit a pull request](https://github.com/JS-DevTools/validate/pulls).
+Contributions, enhancements, and bug-fixes are welcome!  [File an issue](https://github.com/JS-DevTools/assert/issues) on GitHub and [submit a pull request](https://github.com/JS-DevTools/assert/pulls).
 
 #### Building
 To build the project locally on your computer:
 
 1. __Clone this repo__<br>
-`git clone https://github.com/JS-DevTools/validate.git`
+`git clone https://github.com/JS-DevTools/assert.git`
 
 2. __Install dependencies__<br>
 `npm install`
@@ -432,9 +432,9 @@ To build the project locally on your computer:
 
 License
 --------------------------
-@jsdevtools/validate is 100% free and open-source, under the [MIT license](LICENSE). Use it however you want.
+@jsdevtools/assert is 100% free and open-source, under the [MIT license](LICENSE). Use it however you want.
 
-This package is [Treeware](http://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/JS-DevTools/validate) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
+This package is [Treeware](http://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/JS-DevTools/assert) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
 
 
 

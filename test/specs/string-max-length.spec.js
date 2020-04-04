@@ -1,26 +1,26 @@
 "use strict";
 
-const { validate } = require("../../lib");
+const { assert } = require("../../lib");
 const { expect } = require("chai");
 
-describe("validate.string.maxLength()", () => {
+describe("assert.string.maxLength()", () => {
 
-  it("should validate strings that meet the maximum", () => {
-    expect(validate.string.maxLength("a", 1)).to.equal("a");
-    expect(validate.string.maxLength("Hello, world!", 50)).to.equal("Hello, world!");
-    expect(validate.string.maxLength("hello", 5)).to.equal("hello");
+  it("should assert strings that meet the maximum", () => {
+    expect(assert.string.maxLength("a", 1)).to.equal("a");
+    expect(assert.string.maxLength("Hello, world!", 50)).to.equal("Hello, world!");
+    expect(assert.string.maxLength("hello", 5)).to.equal("hello");
   });
 
-  it("should validate default values", () => {
-    expect(validate.string.maxLength(undefined, 1, "name", "A")).to.equal("A");
-    expect(validate.string.maxLength(undefined, 30, "name", "Hello, world!")).to.equal("Hello, world!");
-    expect(validate.string.maxLength(undefined, 5, "name", "hello")).to.equal("hello");
+  it("should assert default values", () => {
+    expect(assert.string.maxLength(undefined, 1, "name", "A")).to.equal("A");
+    expect(assert.string.maxLength(undefined, 30, "name", "Hello, world!")).to.equal("Hello, world!");
+    expect(assert.string.maxLength(undefined, 5, "name", "hello")).to.equal("hello");
   });
 
   it("should throw an error for strings that don't meet the maximum", () => {
     function tooLong (value, maxLength) {
       return () => {
-        validate.string.maxLength(value, maxLength);
+        assert.string.maxLength(value, maxLength);
       };
     }
 
@@ -32,7 +32,7 @@ describe("validate.string.maxLength()", () => {
   it("should throw an error for defaults that don't meet the maximum", () => {
     function invalidDefault (defaultValue, maxLength) {
       return () => {
-        validate.string.maxLength(undefined, maxLength, "name", defaultValue);
+        assert.string.maxLength(undefined, maxLength, "name", defaultValue);
       };
     }
 
