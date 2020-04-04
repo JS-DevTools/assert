@@ -60,6 +60,16 @@ export interface AssertType {
   object(value: unknown, fieldName?: string, defaultValue?: unknown): object;
 
   /**
+   * Asserts that a value is an array.
+   */
+  array<T>(value: T[] | undefined, fieldName?: string, defaultValue?: T[]): T[];
+
+  /**
+   * Asserts that a value is an array.
+   */
+  array(value: unknown, fieldName?: string, defaultValue?: unknown): unknown[];
+
+  /**
    * Asserts that a value is a function (including classes, async functions, arrow functions, generator functions).
    */
   function<T extends Function>(value: T | undefined, fieldName?: string, defaultValue?: T): T;
@@ -80,6 +90,7 @@ type.string = assertString;
 type.number = assertNumber;
 type.boolean = assertBoolean;
 type.object = assertObject;
+type.array = assertArray;
 type.function = assertFunction;
 
 
@@ -123,6 +134,17 @@ function assertObject<T extends object>(value: T | undefined, fieldName = "value
 
   if (typeof value !== "object" || value === null) {
     throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected an object.`);
+  }
+
+  return value;
+}
+
+
+function assertArray<T extends object>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+  value = assertValue(value, fieldName, defaultValue);
+
+  if (!Array.isArray(value)) {
+    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected an array.`);
   }
 
   return value;

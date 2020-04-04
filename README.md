@@ -193,7 +193,7 @@ assert.type.boolean(new Boolean());        // ❌ Invalid value: Boolean. Expect
 
 
 ### `assert.type.object(value, [fieldName], [defaultValue])`
-Asserts that a value is an object `null` is **not** considered an object.
+Asserts that a value is an object. `null` is **not** considered an object.
 
 - **value** - The value to check
 - **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
@@ -211,6 +211,26 @@ assert.type.object(Object.prototype)   // ✔
 assert.type.object(null);              // ❌ Invalid value: null. Expected an object.
 assert.type.object(undefined);         // ❌ Invalid value: undefined. A value is required.
 assert.type.object(Object);            // ❌ Invalid value: function. Expected an object.
+```
+
+
+### `assert.type.array(value, [fieldName], [defaultValue])`
+Asserts that a value is an array.
+
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
+- **defaultValue** - (optional) The default value to use if `value` is `undefined`.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+assert.type.array([])                  // ✔
+assert.type.array([1, 2, 3])           // ✔
+assert.type.array(new Array())         // ✔
+assert.type.array(Array.prototype)     // ✔
+
+assert.type.array("hello");            // ❌ Invalid value: "hello". Expected an array.
+assert.type.array(Array);              // ❌ Invalid value: function. Expected an array.
 ```
 
 
@@ -405,6 +425,89 @@ assert.number.integer.nonNegative(12345.0);         // ✔
 assert.number.integer.nonNegative(-42);             // ❌ Invalid value: -42. Expected zero or greater.
 assert.number.integer.nonNegative(-Infinity);       // ❌ Invalid value: -Infinity. Expected an integer.
 assert.number.integer.nonNegative(NaN);             // ❌ Invalid value: NaN. Expected a number.
+```
+
+
+### `assert.array(value, [fieldName], [defaultValue])`
+This is an alias for [`assert.type.array()`](#assert-array-value-fieldname-defaultvalue)
+
+
+### `assert.array.nonEmpty(value, [fieldName], [defaultValue])`
+Asserts that a value is an array with at least one item.
+
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
+- **defaultValue** - (optional) The default value to use if `value` is `undefined`.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+assert.array.nonEmpty(["a", "b", "c"]);         // ✔
+assert.array.nonEmpty(new Array(1, 2, 3));      // ✔
+
+assert.array.nonEmpty([]);                      // ❌ Invalid value: Array. It cannot be empty.
+assert.array.nonEmpty(new Array());             // ❌ Invalid value: Array. It cannot be empty.
+```
+
+
+### `assert.array.minLength(value, minLength, [fieldName], [defaultValue])`
+Asserts that a value is an array with at least the specified number of items.
+
+- **value** - The value to check
+- **minLength** - The minimum allowed length
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
+- **defaultValue** - (optional) The default value to use if `value` is `undefined`.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+assert.array.minLength([], 0);                   // ✔
+assert.array.minLength(["a", "b", "c"], 1);      // ✔
+
+assert.array.minLength([], 1);                   // ❌ Invalid value: Array. It cannot be empty.
+assert.array.minLength(["a", "b", "c"], 10);     // ❌ Invalid value: [a,b,c]. It should have at least 10 items.
+```
+
+
+### `assert.array.maxLength(value, maxLength, [fieldName], [defaultValue])`
+Asserts that a value is an array with no more than the specified number of items.
+
+- **value** - The value to check
+- **maxLength** - The maximum allowed length
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
+- **defaultValue** - (optional) The default value to use if `value` is `undefined`.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+assert.array.maxLength([], 5);                   // ✔
+assert.array.maxLength(["a", "b", "c"], 3);      // ✔
+
+assert.array.maxLength([1, 2, 3], 1);            // ❌ Invalid value: [1,2,3]. It cannot have more than 1 item.
+assert.array.maxLength(["a", "b", "c"], 2);      // ❌ Invalid value: [a,b,c]. It cannot have more than 2 items.
+```
+
+
+### `assert.array.length(value, minLength, [maxLength], [fieldName], [defaultValue])`
+Asserts that a value is an array with the specified number of items.
+
+- **value** - The value to check
+- **minLength** - The minimum allowed length
+- **maxLength** - (optional) The maximum allowed length. If not specified, it defaults to the same as `minLength`.
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
+- **defaultValue** - (optional) The default value to use if `value` is `undefined`.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+assert.array.length([], 0);                   // ✔
+assert.array.length([], 0, 5);                // ✔
+assert.array.length(["a", "b", "c"], 3);      // ✔
+assert.array.length(["a", "b", "c"], 1, 3);   // ✔
+
+assert.array.length([], 1);                   // ❌ Invalid value: Array. It cannot be empty.
+assert.array.length([1, 2, 3], 5, 10);        // ❌ Invalid value: [1,2,3]. It should have at least 5 items.
+assert.array.length(["a", "b", "c"], 2);      // ❌ Invalid value: [a,b,c]. It must have exactly 2 items.
 ```
 
 

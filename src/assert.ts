@@ -1,3 +1,4 @@
+import { array, AssertArray } from "./array";
 import { AssertNumber, number } from "./number";
 import { AssertString, string } from "./string";
 import { AssertType, type } from "./type";
@@ -27,6 +28,11 @@ export interface Assert {
    * (positive or negative, integer or float, finite or infinite, but **not** `NaN`).
    */
   number: AssertNumber;
+
+  /**
+   * Asserts that a value is an array
+   */
+  array: AssertArray;
 }
 
 /**
@@ -37,4 +43,5 @@ export const assert: Assert = {
   type,
   string,
   number,
+  array,
 };

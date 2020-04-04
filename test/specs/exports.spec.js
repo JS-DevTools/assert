@@ -45,6 +45,12 @@ describe("@jsdevtools/assert package exports", () => {
     expect(namedExport.value).to.equal(commonJSExport.value);
   });
 
+  it("should export assert.array", () => {
+    expect(namedExport.array).to.be.a("function");
+    expect(namedExport.array.name).to.equal("assertArray");
+    expect(namedExport.array).to.equal(commonJSExport.array);
+  });
+
   it("should not export anything else", () => {
     expect(commonJSExport).to.have.keys(
       "default",
@@ -53,6 +59,7 @@ describe("@jsdevtools/assert package exports", () => {
       "string",
       "type",
       "value",
+      "array",
     );
   });
 
