@@ -81,6 +81,16 @@ export interface AssertString {
    * Asserts that a value is one of the values of an enumeration object.
    */
   enum(value: unknown, enumeration: object, fieldName?: string, defaultValue?: string): string;
+
+  /**
+   * Asserts that a value matches the specified regular expression pattern.
+   */
+  pattern<T extends string>(value: T | undefined, pattern: RegExp, fieldName?: string, defaultValue?: T): T;
+
+  /**
+   * Asserts that a value matches the specified regular expression pattern.
+   */
+  pattern(value: unknown, pattern: RegExp, fieldName?: string, defaultValue?: unknown): string;
 }
 
 
@@ -95,6 +105,7 @@ string.minLength = assertMinLength;
 string.maxLength = assertMaxLength;
 Object.defineProperty(string, "length", { value: assertLength });
 string.enum = assertEnum;
+string.pattern = assertPattern;
 
 
 function assertNonEmpty(value: string | undefined, fieldName = "value", defaultValue?: string): string {
@@ -179,6 +190,32 @@ value: string | undefined, enumeration: object, fieldName = "value", defaultValu
   if (!values.includes(value)) {
     let humanizedValues = humanize.list(values, { conjunction: "or" });
     throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected ${humanizedValues}.`);
+  }
+
+  return value;
+}
+
+declare global {
+  interface RegExp {
+    example?: string;
+    examples?: string[];
+  }
+}
+
+function assertPattern(value: string | undefined, pattern: RegExp, fieldName = "value", defaultValue?: string): string {
+  value = type.string(value, fieldName, defaultValue);
+
+  if (!pattern.test(value)) {
+    if (Array.isArray(pattern.examples)) {
+      let humanizedExamples = humanize.values(pattern.examples, { conjunction: "or" });
+      throw ono(`Invalid ${fieldName}: ${humanize(value)}. It should look like ${humanizedExamples}.`);
+    }
+    if (typeof pattern.example === "string") {
+      throw ono(`Invalid ${fieldName}: ${humanize(value)}. It should look like ${humanize(pattern.example)}.`);
+    }
+    else {
+      throw ono(`Invalid ${fieldName}: ${humanize(value)}. It must match ${pattern}.`);
+    }
   }
 
   return value;

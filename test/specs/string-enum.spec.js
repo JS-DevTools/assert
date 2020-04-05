@@ -11,7 +11,7 @@ describe("assert.string.enum()", () => {
     expect(assert.string.enum("", { None: "", All: "all" })).to.equal("");
   });
 
-  it("should throw an error for values that are not in the list of allowed values", () => {
+  it("should throw an error for values that are not in the enumeration", () => {
     function notAllowed (value, enumeration) {
       return () => {
         assert.string.enum(value, enumeration);

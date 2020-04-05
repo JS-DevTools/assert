@@ -363,6 +363,40 @@ assert.string.length("John Doe", 5);           // ❌ Invalid value: "John Doe".
 ```
 
 
+### `assert.string.pattern(value, regex, [fieldName], [defaultValue])`
+Asserts that a value is a string that matches the specified Regular Expression pattern.
+
+- **value** - The value to check
+- **regex** - The regular expression to test
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
+- **defaultValue** - (optional) The default value to use if `value` is `undefined`.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+assert.string.pattern("Foo", /^fo+$/i);                 // ✔
+assert.string.pattern("image.jpg", /\.(jpg|jpeg)/);     // ✔
+assert.string.pattern("", /^\w*$/);                     // ✔
+
+assert.string.pattern("foobar", /^fo+$/i);              // ❌ Invalid value: "foobar". It must match /^fo+$/i.
+assert.string.pattern("jpeg.gif", /\.(jpg|jpeg)/);      // ❌ Invalid value: "jpeg.gif". It must match /\\.(jpg|jpeg)/.
+```
+
+You can customize the assertion error message by adding an `example` or `examples` property to the RegExp object.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+let pattern = /\.(jpg|jpeg)/;
+pattern.example = "image.jpg";
+assert.string.pattern("jpeg.gif", pattern);       // ❌ Invalid value: "jpeg.gif". It should look like "image.jpg".
+
+let pattern = /\.(jpg|jpeg)/;
+pattern.examples = ["image.jpg", "image.jpeg"];
+assert.string.pattern("jpeg.gif", pattern);       // ❌ Invalid value: "jpeg.gif". It should look like "image.jpg" or "image.jpeg".
+```
+
+
 ### `assert.string.enum(value, enum, [fieldName], [defaultValue])`
 Asserts that a value is a string that is a member of the specified enumeration object.
 
