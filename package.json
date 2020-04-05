@@ -1,6 +1,6 @@
 {
   "name": "@jsdevtools/assert",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "An assertion library with user-friendly error messages",
   "keywords": [
     "assert",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@jsdevtools/eslint-config-modular": "^8.0.0",
-    "@jsdevtools/tslint-modular": "^2.0.2",
+    "@jsdevtools/tslint-modular": "^2.0.5",
     "@jsdevtools/version-bump-prompt": "^6.0.2",
     "@types/chai": "^4.2.6",
     "@types/mocha": "^7.0.2",
