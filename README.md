@@ -422,6 +422,49 @@ assert.string.enum("", { None: "none", Some: "some" });           // ❌ Invalid
 This is an alias for [`assert.type.number()`](#assert-number-value-fieldname-defaultvalue)
 
 
+### `assert.number.positive(value, [fieldName], [defaultValue])`
+Asserts that a value is a positive number (greater than zero).
+
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
+- **defaultValue** - (optional) The default value to use if `value` is `undefined`.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+assert.number.positive(42);              // ✔
+assert.number.positive(12345.678);       // ✔
+assert.number.positive(Infinity);        // ✔
+assert.number.positive(Math.PI);         // ✔
+
+assert.number.positive(0);               // ❌ Invalid value: 0. Expected a positive number.
+assert.number.positive(-42);             // ❌ Invalid value: -42. Expected a positive number.
+assert.number.positive(NaN);             // ❌ Invalid value: NaN. Expected a number.
+```
+
+
+### `assert.number.nonNegative(value, [fieldName], [defaultValue])`
+Asserts that a value is a number that is zero or greater.
+
+- **value** - The value to check
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
+- **defaultValue** - (optional) The default value to use if `value` is `undefined`.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+assert.number.nonNegative(0);               // ✔
+assert.number.nonNegative(42);              // ✔
+assert.number.nonNegative(12345.6789);      // ✔
+assert.number.nonNegative(Infinity);        // ✔
+assert.number.nonNegative(Math.PI);         // ✔
+
+assert.number.nonNegative(-42);             // ❌ Invalid value: -42. Expected zero or greater.
+assert.number.nonNegative(-Infinity);       // ❌ Invalid value: -Infinity. Expected zero or greater.
+assert.number.nonNegative(NaN);             // ❌ Invalid value: NaN. Expected a number.
+```
+
+
 ### `assert.number.integer(value, [fieldName], [defaultValue])`
 Asserts that a value is an integer value (positive or negative).
 
