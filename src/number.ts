@@ -72,7 +72,7 @@ number.integer.positive = assertPositiveInteger;
 number.integer.nonNegative = assertNonNegativeInteger;
 
 
-function assertInteger<T extends number>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertInteger(value: number | undefined, fieldName = "value", defaultValue?: number): number {
   value = type.number(value, fieldName, defaultValue);
 
   if (!Number.isInteger(value)) {
@@ -83,10 +83,10 @@ function assertInteger<T extends number>(value: T | undefined, fieldName = "valu
 }
 
 
-function assertPositiveInteger<T extends number>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertPositiveInteger(value: number | undefined, fieldName = "value", defaultValue?: number): number {
   value = assertInteger(value, fieldName, defaultValue);
 
-  if (value as number < 1) {
+  if (value < 1) {
     throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. Expected a positive integer.`);
   }
 
@@ -94,10 +94,10 @@ function assertPositiveInteger<T extends number>(value: T | undefined, fieldName
 }
 
 
-function assertNonNegativeInteger<T extends number>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertNonNegativeInteger(value: number | undefined, fieldName = "value", defaultValue?: number): number {
   value = assertInteger(value, fieldName, defaultValue);
 
-  if (value as number < 0) {
+  if (value < 0) {
     throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. Expected zero or greater.`);
   }
 

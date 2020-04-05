@@ -79,29 +79,30 @@ string.nonWhitespace = assertNonWhitespace;
 string.minLength = assertMinLength;
 string.maxLength = assertMaxLength;
 Object.defineProperty(string, "length", { value: assertLength });
+string.enum = assertEnum;
 
 
-function assertNonEmpty<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertNonEmpty(value: string | undefined, fieldName = "value", defaultValue?: string): string {
   return assertStringLength(value, 1, Infinity, fieldName, defaultValue);
 }
 
 
-function assertMinLength<T extends string>(
-value: T | undefined, minLength: number, fieldName = "value", defaultValue?: T): T {
+function assertMinLength(
+value: string | undefined, minLength: number, fieldName = "value", defaultValue?: string): string {
   return assertStringLength(value, minLength, Infinity, fieldName, defaultValue);
 }
 
 
-function assertMaxLength<T extends string>(
-value: T | undefined, maxLength: number, fieldName = "value", defaultValue?: T): T {
+function assertMaxLength(
+value: string | undefined, maxLength: number, fieldName = "value", defaultValue?: string): string {
   return assertStringLength(value, 0, maxLength, fieldName, defaultValue);
 }
 
 
-function assertLength<T extends string>(
-value: T | undefined, minLength: number, maxLength?: number, fieldName = "value", defaultValue?: T): T {
+function assertLength(
+value: string | undefined, minLength: number, maxLength?: number, fieldName = "value", defaultValue?: string): string {
   if (typeof maxLength === "string") {
-    defaultValue = fieldName as T;
+    defaultValue = fieldName;
     fieldName = maxLength;
     maxLength = undefined;
   }
@@ -112,7 +113,7 @@ value: T | undefined, minLength: number, maxLength?: number, fieldName = "value"
 }
 
 
-function assertNonWhitespace<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertNonWhitespace(value: string | undefined, fieldName = "value", defaultValue?: string): string {
   value = assertNonEmpty(value, fieldName, defaultValue);
 
   if (value.trimStart().length === 0) {
@@ -123,8 +124,8 @@ function assertNonWhitespace<T extends string>(value: T | undefined, fieldName =
 }
 
 
-function assertStringLength<T extends string>(
-value: T | undefined, minLength = 1, maxLength = Infinity, fieldName = "value", defaultValue?: T): T {
+function assertStringLength(
+value: string | undefined, minLength = 1, maxLength = Infinity, fieldName = "value", defaultValue?: string): string {
   value = type.string(value, fieldName, defaultValue);
 
   if (value.length < minLength) {

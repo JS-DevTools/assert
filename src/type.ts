@@ -94,7 +94,7 @@ type.array = assertArray;
 type.function = assertFunction;
 
 
-function assertString<T extends string>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertString(value: string | undefined, fieldName = "value", defaultValue?: string): string {
   value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "string") {
@@ -105,7 +105,7 @@ function assertString<T extends string>(value: T | undefined, fieldName = "value
 }
 
 
-function assertNumber<T extends number>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertNumber(value: number | undefined, fieldName = "value", defaultValue?: number): number {
   value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "number" || Number.isNaN(value)) {
@@ -117,7 +117,7 @@ function assertNumber<T extends number>(value: T | undefined, fieldName = "value
 }
 
 
-function assertBoolean<T extends boolean>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertBoolean(value: boolean | undefined, fieldName = "value", defaultValue?: boolean): boolean {
   value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "boolean") {
@@ -129,7 +129,7 @@ function assertBoolean<T extends boolean>(value: T | undefined, fieldName = "val
 }
 
 
-function assertObject<T extends object>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertObject(value: object | undefined, fieldName = "value", defaultValue?: object): object {
   value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "object" || value === null) {
@@ -140,7 +140,7 @@ function assertObject<T extends object>(value: T | undefined, fieldName = "value
 }
 
 
-function assertArray<T extends object>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertArray(value: unknown[] | undefined, fieldName = "value", defaultValue?: unknown[]): unknown[] {
   value = assertValue(value, fieldName, defaultValue);
 
   if (!Array.isArray(value)) {
@@ -151,7 +151,7 @@ function assertArray<T extends object>(value: T | undefined, fieldName = "value"
 }
 
 
-function assertFunction<T extends Function>(value: T | undefined, fieldName = "value", defaultValue?: T): T {
+function assertFunction(value: Function | undefined, fieldName = "value", defaultValue?: Function): Function {
   value = assertValue(value, fieldName, defaultValue);
 
   if (typeof value !== "function") {
