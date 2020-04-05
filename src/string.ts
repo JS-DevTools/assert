@@ -66,6 +66,21 @@ export interface AssertString {
    * Asserts that a value is a string with the specified number of characters.
    */
   length(value: unknown, minLength: number, maxLength: number, fieldName?: string, defaultValue?: unknown): string;
+
+  /**
+   * Asserts that a value is one of the values of an enumeration object.
+   */
+  enum<T extends string>(value: T | undefined, enumeration: Record<string, T>, fieldName?: string, defaultValue?: T): T;
+
+  /**
+   * Asserts that a value is one of the values of an enumeration object.
+   */
+  enum<T>(value: unknown, enumeration: Record<string, T>, fieldName?: string, defaultValue?: T): T;
+
+  /**
+   * Asserts that a value is one of the values of an enumeration object.
+   */
+  enum(value: unknown, enumeration: object, fieldName?: string, defaultValue?: string): string;
 }
 
 
@@ -150,6 +165,20 @@ value: string | undefined, minLength = 1, maxLength = Infinity, fieldName = "val
     else {
       throw ono.range(`Invalid ${fieldName}: ${humanize(value)}. It cannot be more than ${maxChars}.`);
     }
+  }
+
+  return value;
+}
+
+
+function assertEnum(
+value: string | undefined, enumeration: object, fieldName = "value", defaultValue?: string): string {
+  value = type.string(value, fieldName, defaultValue);
+  let values = Object.values(enumeration);
+
+  if (!values.includes(value)) {
+    let humanizedValues = humanize.list(values, { conjunction: "or" });
+    throw ono.type(`Invalid ${fieldName}: ${humanize(value)}. Expected ${humanizedValues}.`);
   }
 
   return value;

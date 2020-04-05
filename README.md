@@ -363,6 +363,27 @@ assert.string.length("John Doe", 5);           // ❌ Invalid value: "John Doe".
 ```
 
 
+### `assert.string.enum(value, enum, [fieldName], [defaultValue])`
+Asserts that a value is a string that is a member of the specified enumeration object.
+
+- **value** - The value to check
+- **enum** - The object whose values are the enumveration members
+- **fieldName** - (optional) The name of the field being assertd. This is used in the error message if the assertion fails.
+- **defaultValue** - (optional) The default value to use if `value` is `undefined`.
+
+```javascript
+import assert from "@jsdevtools/assert";
+
+assert.string.enum("foo", { Foo: "foo", Bar: "bar" });            // ✔
+assert.string.enum("3", { One: "1", Two: "2", Three: "3" });      // ✔
+assert.string.enum("", { None: "", Some: "some", All: "all" });   // ✔
+
+assert.string.enum("Bar", { Foo: "foo", Bar: "bar" });            // ❌ Invalid value: "Bar". Expected foo or bar.
+assert.string.enum("5", { One: "1", Two: "2", Three: "3" });      // ❌ Invalid value: "5". Expected 1, 2, or 3.
+assert.string.enum("", { None: "none", Some: "some" });           // ❌ Invalid value: "". Expected none or some.
+```
+
+
 ### `assert.number(value, [fieldName], [defaultValue])`
 This is an alias for [`assert.type.number()`](#assert-number-value-fieldname-defaultvalue)
 
