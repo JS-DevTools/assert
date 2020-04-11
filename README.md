@@ -612,7 +612,7 @@ assert.array.length(["a", "b", "c"], 2);      // ❌ Invalid value: [a,b,c]. It 
 
 Contributing
 --------------------------
-Contributions, enhancements, and bug-fixes are welcome!  [File an issue](https://github.com/JS-DevTools/assert/issues) on GitHub and [submit a pull request](https://github.com/JS-DevTools/assert/pulls).
+Contributions, enhancements, and bug-fixes are welcome!  [Open an issue](https://github.com/JS-DevTools/assert/issues) on GitHub and [submit a pull request](https://github.com/JS-DevTools/assert/pulls).
 
 #### Building
 To build the project locally on your computer:
