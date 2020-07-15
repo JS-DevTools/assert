@@ -2,8 +2,8 @@ Assert
 ======================================
 ### An assertion library with user-friendly error messages
 
-[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/assert/blob/master/.github/workflows/CI-CD.yaml)
-[![Build Status](https://github.com/JS-DevTools/assert/workflows/CI-CD/badge.svg)](https://github.com/JS-DevTools/assert/blob/master/.github/workflows/CI-CD.yaml)
+[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/assert/actions)
+[![Build Status](https://github.com/JS-DevTools/assert/workflows/CI-CD/badge.svg)](https://github.com/JS-DevTools/assert/actions)
 
 [![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/assert/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/assert)
 [![Dependencies](https://david-dm.org/JS-DevTools/assert.svg)](https://david-dm.org/JS-DevTools/assert)
