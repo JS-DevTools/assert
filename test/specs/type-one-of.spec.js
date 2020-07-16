@@ -1,4 +1,4 @@
-/* globals BigInt */
+/* eslint-env node */
 /* eslint-disable no-new-object, no-new-wrappers */
 "use strict";
 

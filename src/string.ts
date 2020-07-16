@@ -97,7 +97,6 @@ export interface AssertString {
 /**
  * Asserts that a value is a string value (including empty strings).
  */
-// tslint:disable-next-line: variable-name
 export const string = type.string as AssertString;
 string.nonEmpty = assertNonEmpty;
 string.nonWhitespace = assertNonWhitespace;
@@ -114,19 +113,19 @@ function assertNonEmpty(value: string | undefined, fieldName = "value", defaultV
 
 
 function assertMinLength(
-value: string | undefined, minLength: number, fieldName = "value", defaultValue?: string): string {
+  value: string | undefined, minLength: number, fieldName = "value", defaultValue?: string): string {
   return assertStringLength(value, minLength, Infinity, fieldName, defaultValue);
 }
 
 
 function assertMaxLength(
-value: string | undefined, maxLength: number, fieldName = "value", defaultValue?: string): string {
+  value: string | undefined, maxLength: number, fieldName = "value", defaultValue?: string): string {
   return assertStringLength(value, 0, maxLength, fieldName, defaultValue);
 }
 
 
 function assertLength(
-value: string | undefined, minLength: number, maxLength?: number, fieldName = "value", defaultValue?: string): string {
+  value: string | undefined, minLength: number, maxLength?: number, fieldName = "value", defaultValue?: string): string {
   if (typeof maxLength === "string") {
     defaultValue = fieldName;
     fieldName = maxLength;
@@ -151,7 +150,7 @@ function assertNonWhitespace(value: string | undefined, fieldName = "value", def
 
 
 function assertStringLength(
-value: string | undefined, minLength = 1, maxLength = Infinity, fieldName = "value", defaultValue?: string): string {
+  value: string | undefined, minLength = 1, maxLength = Infinity, fieldName = "value", defaultValue?: string): string {
   value = type.string(value, fieldName, defaultValue);
 
   if (value.length < minLength) {
@@ -183,7 +182,7 @@ value: string | undefined, minLength = 1, maxLength = Infinity, fieldName = "val
 
 
 function assertEnum(
-value: string | undefined, enumeration: object, fieldName = "value", defaultValue?: string): string {
+  value: string | undefined, enumeration: object, fieldName = "value", defaultValue?: string): string {
   value = type.string(value, fieldName, defaultValue);
   let values = Object.values(enumeration);
 

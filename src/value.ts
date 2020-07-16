@@ -1,4 +1,3 @@
-// tslint:disable: no-shadowed-variable
 import { humanize } from "@jsdevtools/humanize-anything";
 import { ono } from "@jsdevtools/ono";
 

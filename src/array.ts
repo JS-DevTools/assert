@@ -62,7 +62,6 @@ export interface AssertArray {
 /**
  * Asserts that a value is an array value (including empty arrays).
  */
-// tslint:disable-next-line: variable-name
 export const array = type.array as AssertArray;
 array.nonEmpty = assertNonEmpty;
 array.minLength = assertMinLength;
@@ -76,19 +75,19 @@ function assertNonEmpty<T>(value: T[] | undefined, fieldName = "value", defaultV
 
 
 function assertMinLength<T>(
-value: T[] | undefined, minLength: number, fieldName = "value", defaultValue?: T[]): T[] {
+  value: T[] | undefined, minLength: number, fieldName = "value", defaultValue?: T[]): T[] {
   return assertArrayLength(value, minLength, Infinity, fieldName, defaultValue);
 }
 
 
 function assertMaxLength<T>(
-value: T[] | undefined, maxLength: number, fieldName = "value", defaultValue?: T[]): T[] {
+  value: T[] | undefined, maxLength: number, fieldName = "value", defaultValue?: T[]): T[] {
   return assertArrayLength(value, 0, maxLength, fieldName, defaultValue);
 }
 
 
 function assertLength<T>(
-value: T[] | undefined, minLength: number, maxLength?: number, fieldName = "value", defaultValue?: T[]): T[] {
+  value: T[] | undefined, minLength: number, maxLength?: number, fieldName = "value", defaultValue?: T[]): T[] {
   if (typeof maxLength === "string") {
     defaultValue = fieldName as unknown as T[];
     fieldName = maxLength;
@@ -102,7 +101,7 @@ value: T[] | undefined, minLength: number, maxLength?: number, fieldName = "valu
 
 
 function assertArrayLength<T>(
-value: T[] | undefined, minLength = 1, maxLength = Infinity, fieldName = "value", defaultValue?: T[]): T[] {
+  value: T[] | undefined, minLength = 1, maxLength = Infinity, fieldName = "value", defaultValue?: T[]): T[] {
   value = type.array(value, fieldName, defaultValue);
 
   if (value.length < minLength) {

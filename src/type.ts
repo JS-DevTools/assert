@@ -1,4 +1,3 @@
-// tslint:disable: ban-types no-null-undefined-union
 import { humanize } from "@jsdevtools/humanize-anything";
 import { ono } from "@jsdevtools/ono";
 import { value as assertValue } from "./value";
@@ -163,13 +162,13 @@ function assertFunction(value: Function | undefined, fieldName = "value", defaul
 
 
 function assertType<T>(
-value: T | undefined, type: Function | undefined | null, fieldName = "value", defaultValue?: T): T {  // tslint:disable-line: no-shadowed-variable
+  value: T | undefined, type: Function | undefined | null, fieldName = "value", defaultValue?: T): T {
   return assertTypeOneOf(value, [type], fieldName, defaultValue);
 }
 
 
 function assertTypeOneOf<T>(
-value: T | undefined, types: Array<Function | undefined | null>, fieldName = "value", defaultValue?: T): T {
+  value: T | undefined, types: Array<Function | undefined | null>, fieldName = "value", defaultValue?: T): T {
   if (value === undefined && defaultValue !== undefined) {
     value = defaultValue;
   }
@@ -180,7 +179,6 @@ value: T | undefined, types: Array<Function | undefined | null>, fieldName = "va
     if (typeof t === "function") {
       constructors.push(t);
 
-      // tslint:disable-next-line: switch-default
       switch (t) {
         case String:
           primitiveTypes.push("string");
@@ -226,7 +224,7 @@ value: T | undefined, types: Array<Function | undefined | null>, fieldName = "va
 }
 
 function getTypeList(
-primitiveTypes: string[], constructors: Function[], specialValues: Array<null | undefined>): string {
+  primitiveTypes: string[], constructors: Function[], specialValues: Array<null | undefined>): string {
   if (primitiveTypes.length === 0 && constructors.length === 0) {
     return humanize.list(specialValues.map(String), { conjunction: "or" });
   }

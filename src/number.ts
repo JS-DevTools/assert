@@ -85,7 +85,6 @@ export interface AssertInteger {
  * Asserts that a value is a numeric value
  * (positive or negative, integer or float, finite or infinite, but **not** `NaN`).
  */
-// tslint:disable-next-line: variable-name
 export const number = type.number as AssertNumber;
 number.positive = assertPositiveNumber;
 number.nonNegative = assertNonNegativeNumber;

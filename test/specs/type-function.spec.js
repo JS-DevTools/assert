@@ -7,9 +7,9 @@ describe("assert.type.function()", () => {
 
   it("should assert all types of functions", () => {
     expect(assert.type.function(function foo () {})).to.be.a("function");
-    expect(assert.type.function(function () {})).to.be.a("function");
+    expect(assert.type.function(() => {})).to.be.a("function");
     expect(assert.type.function(function* () {})).to.be.a("function");
-    expect(assert.type.function(async function () {})).to.be.a("function");
+    expect(assert.type.function(async () => {})).to.be.a("function");
     expect(assert.type.function(async function* () {})).to.be.a("function");
     expect(assert.type.function(() => {})).to.be.a("function");
     expect(assert.type.function(async () => {})).to.be.a("function");
@@ -19,9 +19,9 @@ describe("assert.type.function()", () => {
 
   it("should assert default values", () => {
     expect(assert.type.function(undefined, "method", function foo () {})).to.be.a("function");
-    expect(assert.type.function(undefined, "method", function () {})).to.be.a("function");
+    expect(assert.type.function(undefined, "method", () => {})).to.be.a("function");
     expect(assert.type.function(undefined, "method", function* () {})).to.be.a("function");
-    expect(assert.type.function(undefined, "method", async function () {})).to.be.a("function");
+    expect(assert.type.function(undefined, "method", async () => {})).to.be.a("function");
     expect(assert.type.function(undefined, "method", async function* () {})).to.be.a("function");
     expect(assert.type.function(undefined, "method", () => {})).to.be.a("function");
     expect(assert.type.function(undefined, "method", async () => {})).to.be.a("function");
